@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminación de Datos - Bot IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #c0392b;
+        }
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fdf2e9;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🗑️ Solicitud de Eliminación de Datos</h1>
+    
+    <div class="info-box">
+        <h3>¿Qué datos eliminamos?</h3>
+        <ul>
+            <li>Todos tus mensajes enviados a nuestros bots</li>
+            <li>Tu información de perfil (nombre y foto)</li>
+            <li>Historial de conversaciones</li>
+            <li>Cualquier dato personal asociado a tu cuenta</li>
+        </ul>
+    </div>
+
+    <div class="warning-box">
+        <h3>⚠️ Importante</h3>
+        <p>Esta acción es <strong>irreversible</strong>. Una vez eliminados, no podremos recuperar tus datos. Si vuelves a contactar nuestros bots, se tratará como un nuevo usuario.</p>
+    </div>
+
+    <div class="form-container">
+        <h2>Formulario de Solicitud</h2>
+        <form id="deletionForm">
+            <div class="form-group">
+                <label for="facebookName">Nombre en Facebook:</label>
+                <input type="text" id="facebookName" name="facebookName" required 
+                       placeholder="Ej: Juan Pérez">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email de contacto:</label>
+                <input type="email" id="email" name="email" required 
+                       placeholder="tu@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="botUsed">¿Qué bot(s) utilizaste?</label>
+                <select id="botUsed" name="botUsed" required>
+                    <option value="">Selecciona...</option>
+                    <option value="alterna">ALTERNA (Energía Solar)</option>
+                    <option value="webdev">WebDev Pro (Desarrollo Web)</option>
+                    <option value="both">Ambos bots</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Motivo de eliminación (opcional):</label>
+                <textarea id="reason" name="reason" rows="3" 
+                          placeholder="Puedes contarnos por qué deseas eliminar tus datos..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="confirm" name="confirm" required>
+                    Confirmo que deseo eliminar permanentemente todos mis datos
+                </label>
+            </div>
+
+            <button type="submit">🗑️ Solicitar Eliminación de Datos</button>
+        </form>
+    </div>
+
+    <div class="info-box">
+        <h3>📧 Métodos Alternativos</h3>
+        <p>También puedes solicitar la eliminación enviando un email a:</p>
+        <p><strong>andrewryan233233@gmail.com</strong></p>
+        <p>Incluye tu nombre de Facebook y especifica qué bot(s) utilizaste.</p>
+    </div>
+
+    <h2>⏱️ Tiempo de Procesamiento</h2>
+    <p>Procesaremos tu solicitud en un plazo máximo de <strong>30 días</strong>. Te enviaremos una confirmación por email cuando se complete la eliminación.</p>
+
+    <script>
+        document.getElementById('deletionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simular envío (en producción, esto enviaría a tu servidor)
+            alert('✅ Solicitud enviada correctamente.\n\nRecibirás una confirmación por email en las próximas 24 horas.\n\nTu solicitud será procesada en un plazo máximo de 30 días.');
+            
+            // Limpiar formulario
+            this.reset();
+        });
+    </script>
+</body>
+</html>
