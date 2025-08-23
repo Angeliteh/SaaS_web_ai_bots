@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activar Bot - BotFlow AI</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <style>
+        .access-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .access-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .access-title {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .access-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .access-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .access-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .access-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .access-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #00d2d3;
+            background: rgba(0, 210, 211, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .demo-codes {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .demo-title {
+            color: #00d2d3;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .demo-code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-code:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="access-container">
+        <div class="access-card">
+            <h1 class="access-title">🤖 Activar Bot</h1>
+            <p class="access-subtitle">
+                Ingresa el código de acceso que recibiste por email para conectar tu página de Facebook
+            </p>
+            
+            <form id="access-form">
+                <input 
+                    type="text" 
+                    id="access-code" 
+                    class="access-input"
+                    placeholder="Código de acceso"
+                    maxlength="12"
+                    required
+                >
+                
+                <button type="submit" class="access-button" id="verify-btn">
+                    Verificar Acceso
+                </button>
+            </form>
+            
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+            
+            <!-- Solo para demo/video -->
+            <div class="demo-codes">
+                <div class="demo-title">📹 Códigos de Demo (Solo para video)</div>
+                <div class="demo-code" onclick="fillCode('REST001')">REST001</div>
+                <div class="demo-code" onclick="fillCode('SOLAR002')">SOLAR002</div>
+                <div class="demo-code" onclick="fillCode('INMOB003')">INMOB003</div>
+                <div class="demo-code" onclick="fillCode('WEBDEV004')">WEBDEV004</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Códigos válidos para demo
+        const VALID_CODES = {
+            'REST001': {
+                client: 'Restaurante La Cocina',
+                bot: 'restaurante',
+                plan: 'standard'
+            },
+            'SOLAR002': {
+                client: 'ALTERNA Energía Solar',
+                bot: 'alterna',
+                plan: 'premium'
+            },
+            'INMOB003': {
+                client: 'InmoVentas Pro',
+                bot: 'inmobiliaria',
+                plan: 'premium'
+            },
+            'WEBDEV004': {
+                client: 'WebDev Pro',
+                bot: 'webdev',
+                plan: 'basic'
+            }
+        };
+
+        // Llenar código de demo
+        function fillCode(code) {
+            document.getElementById('access-code').value = code;
+        }
+
+        // Manejar formulario
+        document.getElementById('access-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            verifyAccess();
+        });
+
+        function verifyAccess() {
+            const code = document.getElementById('access-code').value.toUpperCase().trim();
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            const verifyBtn = document.getElementById('verify-btn');
+            
+            // Limpiar mensajes
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            if (!code) {
+                showError('Por favor ingresa un código de acceso');
+                return;
+            }
+            
+            // Verificar código
+            if (VALID_CODES[code]) {
+                const clientData = VALID_CODES[code];
+                
+                // Mostrar éxito
+                successDiv.innerHTML = `✅ Código válido para: ${clientData.client}`;
+                successDiv.style.display = 'block';
+                
+                // Deshabilitar botón
+                verifyBtn.disabled = true;
+                verifyBtn.textContent = 'Redirigiendo...';
+                
+                // Guardar datos en localStorage
+                localStorage.setItem('clientData', JSON.stringify(clientData));
+                localStorage.setItem('accessCode', code);
+                
+                // Redireccionar después de 2 segundos
+                setTimeout(() => {
+                    window.location.href = 'connect.html';
+                }, 2000);
+                
+            } else {
+                showError('Código de acceso inválido. Contacta a soporte.');
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // Auto-focus en el input
+        document.getElementById('access-code').focus();
+    </script>
+</body>
+</html>

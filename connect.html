@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectar Facebook - BotFlow AI</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <style>
+        .connect-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .connect-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .client-info {
+            background: rgba(0, 210, 211, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 210, 211, 0.3);
+        }
+        
+        .client-name {
+            color: #00d2d3;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .client-plan {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        .connect-title {
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .connect-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .facebook-btn {
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .facebook-btn:hover {
+            background: #166fe5;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .facebook-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .pages-section {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .pages-title {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .page-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .page-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .page-item.selected {
+            border-color: #00d2d3;
+            background: rgba(0, 210, 211, 0.2);
+        }
+        
+        .page-name {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .page-id {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+        
+        .connect-page-btn {
+            background: linear-gradient(45deg, #00d2d3, #01a3a4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .connect-page-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .status-success {
+            background: rgba(0, 210, 211, 0.2);
+            color: #00d2d3;
+            border: 1px solid rgba(0, 210, 211, 0.3);
+        }
+        
+        .status-error {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="connect-container">
+        <div class="connect-card">
+            <!-- Información del cliente -->
+            <div class="client-info" id="client-info">
+                <div class="client-name" id="client-name">Cargando...</div>
+                <div class="client-plan" id="client-plan">Plan: ...</div>
+            </div>
+            
+            <h1 class="connect-title">🔗 Conectar Facebook</h1>
+            <p class="connect-subtitle">
+                Conecta tu página de Facebook para activar tu bot de IA. 
+                Necesitamos permisos para ver tus páginas y enviar mensajes automáticos.
+            </p>
+            
+            <!-- Botón de Facebook -->
+            <button id="facebook-login-btn" class="facebook-btn" onclick="loginWithFacebook()">
+                <span>📘</span>
+                Conectar con Facebook
+            </button>
+            
+            <!-- Sección de páginas -->
+            <div class="pages-section" id="pages-section">
+                <h3 class="pages-title">Selecciona tu página:</h3>
+                <div id="pages-list"></div>
+                <button id="connect-page-btn" class="connect-page-btn" onclick="connectSelectedPage()">
+                    Conectar esta página
+                </button>
+            </div>
+            
+            <!-- Mensajes de estado -->
+            <div id="status-message" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" 
+            src="https://connect.facebook.net/es_ES/sdk.js"></script>
+
+    <script>
+        let selectedPageData = null;
+        let clientData = null;
+
+        // Inicializar cuando carga la página
+        window.onload = function() {
+            loadClientData();
+            initializeFacebookSDK();
+        };
+
+        function loadClientData() {
+            // Cargar datos del cliente desde localStorage
+            const storedData = localStorage.getItem('clientData');
+            const accessCode = localStorage.getItem('accessCode');
+            
+            if (!storedData || !accessCode) {
+                // Redireccionar si no hay datos
+                window.location.href = 'access.html';
+                return;
+            }
+            
+            clientData = JSON.parse(storedData);
+            
+            // Mostrar información del cliente
+            document.getElementById('client-name').textContent = clientData.client;
+            document.getElementById('client-plan').textContent = `Plan: ${clientData.plan} | Bot: ${clientData.bot}`;
+        }
+
+        function initializeFacebookSDK() {
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: '1487686069074246', // Tu App ID de Facebook
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v18.0'
+                });
+            };
+        }
+
+        function loginWithFacebook() {
+            const btn = document.getElementById('facebook-login-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Conectando...';
+            
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    console.log('Login exitoso:', response);
+                    loadUserPages();
+                } else {
+                    showError('Error al conectar con Facebook. Inténtalo de nuevo.');
+                    resetFacebookButton();
+                }
+            }, {
+                scope: 'pages_show_list,pages_messaging,pages_manage_metadata'
+            });
+        }
+
+        function loadUserPages() {
+            showStatus('Cargando tus páginas...', 'success');
+            
+            FB.api('/me/accounts', function(response) {
+                if (response && response.data) {
+                    displayPages(response.data);
+                } else {
+                    showError('No se pudieron cargar las páginas. Verifica tus permisos.');
+                    resetFacebookButton();
+                }
+            });
+        }
+
+        function displayPages(pages) {
+            const pagesSection = document.getElementById('pages-section');
+            const pagesList = document.getElementById('pages-list');
+            
+            if (pages.length === 0) {
+                showError('No tienes páginas de Facebook para conectar.');
+                return;
+            }
+            
+            // Limpiar lista
+            pagesList.innerHTML = '';
+            
+            // Agregar cada página
+            pages.forEach(page => {
+                const pageItem = document.createElement('div');
+                pageItem.className = 'page-item';
+                pageItem.onclick = () => selectPage(page, pageItem);
+                
+                pageItem.innerHTML = `
+                    <div class="page-name">${page.name}</div>
+                    <div class="page-id">ID: ${page.id}</div>
+                `;
+                
+                pagesList.appendChild(pageItem);
+            });
+            
+            // Mostrar sección
+            pagesSection.style.display = 'block';
+            
+            // Ocultar mensaje de estado
+            document.getElementById('status-message').style.display = 'none';
+        }
+
+        function selectPage(pageData, element) {
+            // Remover selección anterior
+            document.querySelectorAll('.page-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Seleccionar nueva página
+            element.classList.add('selected');
+            selectedPageData = pageData;
+            
+            // Mostrar botón de conectar
+            document.getElementById('connect-page-btn').style.display = 'inline-block';
+        }
+
+        function connectSelectedPage() {
+            if (!selectedPageData) {
+                showError('Por favor selecciona una página primero.');
+                return;
+            }
+            
+            const btn = document.getElementById('connect-page-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Conectando...';
+            
+            // Simular conexión (en producción, enviarías al backend)
+            setTimeout(() => {
+                // Guardar datos de la página
+                const connectionData = {
+                    ...clientData,
+                    pageId: selectedPageData.id,
+                    pageName: selectedPageData.name,
+                    pageToken: selectedPageData.access_token,
+                    connectedAt: new Date().toISOString()
+                };
+                
+                localStorage.setItem('connectionData', JSON.stringify(connectionData));
+                
+                // Redireccionar a página de éxito
+                window.location.href = 'success.html';
+            }, 2000);
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+        }
+
+        function showError(message) {
+            showStatus(message, 'error');
+        }
+
+        function resetFacebookButton() {
+            const btn = document.getElementById('facebook-login-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<span>📘</span> Conectar con Facebook';
+        }
+    </script>
+</body>
+</html>
