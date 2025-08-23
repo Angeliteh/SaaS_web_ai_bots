@@ -254,18 +254,33 @@
 
         function initializeFacebookSDK() {
             window.fbAsyncInit = function() {
-                try {
-                    FB.init({
-                        appId: '1487686069074246', // Tu App ID de Facebook
-                        cookie: true,
-                        xfbml: true,
-                        version: 'v21.0'
-                    });
-                    console.log('✅ Facebook SDK inicializado correctamente');
-                } catch (error) {
-                    console.error('❌ Error inicializando Facebook SDK:', error);
-                    showError('Error cargando Facebook SDK. Recarga la página.');
+                const versions = ['v20.0', 'v19.0', 'v18.0', 'v17.0'];
+                let currentVersion = 0;
+
+                function tryInit() {
+                    try {
+                        FB.init({
+                            appId: '1487686069074246',
+                            cookie: true,
+                            xfbml: true,
+                            version: versions[currentVersion]
+                        });
+                        console.log(`✅ Facebook SDK inicializado con ${versions[currentVersion]}`);
+                        return true;
+                    } catch (error) {
+                        console.error(`❌ Error con ${versions[currentVersion]}:`, error);
+                        currentVersion++;
+                        if (currentVersion < versions.length) {
+                            console.log(`🔄 Probando ${versions[currentVersion]}...`);
+                            return tryInit();
+                        } else {
+                            showError('Error cargando Facebook SDK. Contacta soporte.');
+                            return false;
+                        }
+                    }
                 }
+
+                tryInit();
             };
         }
 
