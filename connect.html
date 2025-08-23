@@ -221,8 +221,8 @@
     </div>
 
     <!-- Facebook SDK -->
-    <script async defer crossorigin="anonymous" 
-            src="https://connect.facebook.net/es_ES/sdk.js"></script>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/en_US/sdk.js"></script>
 
     <script>
         let selectedPageData = null;
@@ -254,25 +254,42 @@
 
         function initializeFacebookSDK() {
             window.fbAsyncInit = function() {
-                FB.init({
-                    appId: '1487686069074246', // Tu App ID de Facebook
-                    cookie: true,
-                    xfbml: true,
-                    version: 'v18.0'
-                });
+                try {
+                    FB.init({
+                        appId: '1487686069074246', // Tu App ID de Facebook
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v21.0'
+                    });
+                    console.log('✅ Facebook SDK inicializado correctamente');
+                } catch (error) {
+                    console.error('❌ Error inicializando Facebook SDK:', error);
+                    showError('Error cargando Facebook SDK. Recarga la página.');
+                }
             };
         }
 
         function loginWithFacebook() {
+            // Verificar que FB esté disponible
+            if (typeof FB === 'undefined') {
+                showError('Facebook SDK no está cargado. Recarga la página.');
+                return;
+            }
+
             const btn = document.getElementById('facebook-login-btn');
             btn.disabled = true;
             btn.innerHTML = '<span class="loading"></span> Conectando...';
-            
+
+            console.log('🔍 Iniciando login con Facebook...');
+
             FB.login(function(response) {
+                console.log('📱 Respuesta de Facebook:', response);
+
                 if (response.authResponse) {
-                    console.log('Login exitoso:', response);
+                    console.log('✅ Login exitoso:', response);
                     loadUserPages();
                 } else {
+                    console.log('❌ Login cancelado o falló:', response);
                     showError('Error al conectar con Facebook. Inténtalo de nuevo.');
                     resetFacebookButton();
                 }
