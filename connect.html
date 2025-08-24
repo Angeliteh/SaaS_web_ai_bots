@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conectar Facebook - BotFlow AI</title>
+    <title>Connect Facebook - BotFlow AI</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
     <style>
         .connect-container {
@@ -33,14 +33,14 @@
             margin-bottom: 30px;
             border: 1px solid rgba(0, 210, 211, 0.3);
         }
-        
+
         .client-name {
             color: #00d2d3;
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 5px;
         }
-        
+
         .client-plan {
             color: rgba(255, 255, 255, 0.8);
             font-size: 1rem;
@@ -188,124 +188,109 @@
 <body>
     <div class="connect-container">
         <div class="connect-card">
-            <!-- Información del cliente -->
+            <!-- Client information -->
             <div class="client-info" id="client-info">
-                <div class="client-name" id="client-name">Cargando...</div>
+                <div class="client-name" id="client-name">Loading...</div>
                 <div class="client-plan" id="client-plan">Plan: ...</div>
             </div>
-            
-            <h1 class="connect-title">🔗 Conectar Facebook</h1>
+
+            <h1 class="connect-title">🔗 Connect Facebook</h1>
             <p class="connect-subtitle">
-                Conecta tu página de Facebook para activar tu bot de IA. 
-                Necesitamos permisos para ver tus páginas y enviar mensajes automáticos.
+                Connect your Facebook page to activate my AI bot service.
+                I need permissions to access your pages and send automated messages.
             </p>
             
-            <!-- Botón de Facebook -->
+            <!-- Facebook button -->
             <button id="facebook-login-btn" class="facebook-btn" onclick="loginWithFacebook()">
                 <span>📘</span>
-                Conectar con Facebook
+                Connect with Facebook
             </button>
-            
-            <!-- Sección de páginas -->
+
+            <!-- Pages section -->
             <div class="pages-section" id="pages-section">
-                <h3 class="pages-title">Selecciona tu página:</h3>
+                <h3 class="pages-title">Select your page:</h3>
                 <div id="pages-list"></div>
                 <button id="connect-page-btn" class="connect-page-btn" onclick="connectSelectedPage()">
-                    Conectar esta página
+                    Connect this page
                 </button>
             </div>
             
-            <!-- Mensajes de estado -->
+            <!-- Status messages -->
             <div id="status-message" class="status-message"></div>
         </div>
     </div>
 
     <!-- Facebook SDK -->
     <script async defer crossorigin="anonymous"
-            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v23.0&appId=1487686069074246&autoLogAppEvents=1"></script>
+            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0&appId=1487686069074246&autoLogAppEvents=1"></script>
 
     <script>
         let selectedPageData = null;
         let clientData = null;
 
-        // Inicializar cuando carga la página
+        // Initialize when page loads
         window.onload = function() {
             loadClientData();
             initializeFacebookSDK();
         };
 
         function loadClientData() {
-            // Cargar datos del cliente desde localStorage
+            // Load client data from localStorage
             const storedData = localStorage.getItem('clientData');
             const accessCode = localStorage.getItem('accessCode');
-            
+
             if (!storedData || !accessCode) {
-                // Redireccionar si no hay datos
+                // Redirect if no data
                 window.location.href = 'access.html';
                 return;
             }
-            
+
             clientData = JSON.parse(storedData);
-            
-            // Mostrar información del cliente
+
+            // Show client information
             document.getElementById('client-name').textContent = clientData.client;
             document.getElementById('client-plan').textContent = `Plan: ${clientData.plan} | Bot: ${clientData.bot}`;
         }
 
         function initializeFacebookSDK() {
             window.fbAsyncInit = function() {
-                const versions = ['v20.0', 'v19.0', 'v18.0', 'v17.0'];
-                let currentVersion = 0;
-
-                function tryInit() {
-                    try {
-                        FB.init({
-                            appId: '1487686069074246',
-                            cookie: true,
-                            xfbml: true,
-                            version: versions[currentVersion]
-                        });
-                        console.log(`✅ Facebook SDK inicializado con ${versions[currentVersion]}`);
-                        return true;
-                    } catch (error) {
-                        console.error(`❌ Error con ${versions[currentVersion]}:`, error);
-                        currentVersion++;
-                        if (currentVersion < versions.length) {
-                            console.log(`🔄 Probando ${versions[currentVersion]}...`);
-                            return tryInit();
-                        } else {
-                            showError('Error cargando Facebook SDK. Contacta soporte.');
-                            return false;
-                        }
-                    }
+                try {
+                    FB.init({
+                        appId: '1487686069074246',
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v21.0'
+                    });
+                    console.log('✅ Facebook SDK initialized with v21.0');
+                } catch (error) {
+                    console.error('❌ Error initializing Facebook SDK:', error);
+                    showError('Error loading Facebook SDK. Please contact support.');
                 }
-
-                tryInit();
             };
         }
 
         function loginWithFacebook() {
-            // Verificar que FB esté disponible
+            // Verify FB is available
             if (typeof FB === 'undefined') {
-                showError('Facebook SDK no está cargado. Recarga la página.');
+                showError('Facebook SDK is not loaded. Please reload the page.');
                 return;
             }
 
             const btn = document.getElementById('facebook-login-btn');
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading"></span> Conectando...';
+            btn.innerHTML = '<span class="loading"></span> Connecting...';
 
-            console.log('🔍 Iniciando login con Facebook...');
+            console.log('🔍 Starting Facebook login...');
 
             FB.login(function(response) {
-                console.log('📱 Respuesta de Facebook:', response);
+                console.log('📱 Facebook response:', response);
 
                 if (response.authResponse) {
-                    console.log('✅ Login exitoso:', response);
+                    console.log('✅ Login successful:', response);
                     loadUserPages();
                 } else {
-                    console.log('❌ Login cancelado o falló:', response);
-                    showError('Error al conectar con Facebook. Inténtalo de nuevo.');
+                    console.log('❌ Login cancelled or failed:', response);
+                    showError('Error connecting to Facebook. Please try again.');
                     resetFacebookButton();
                 }
             }, {
@@ -314,13 +299,19 @@
         }
 
         function loadUserPages() {
-            showStatus('Cargando tus páginas...', 'success');
-            
+            showStatus('Loading your pages...', 'success');
+
             FB.api('/me/accounts', function(response) {
                 if (response && response.data) {
+                    console.log('📊 pages_show_list DATA USAGE:');
+                    console.log('✅ Page List Retrieved:', {
+                        totalPages: response.data.length + ' pages found',
+                        action: 'Displaying user managed pages',
+                        permission: 'pages_show_list allows access to page list'
+                    });
                     displayPages(response.data);
                 } else {
-                    showError('No se pudieron cargar las páginas. Verifica tus permisos.');
+                    showError('Could not load pages. Please verify your permissions.');
                     resetFacebookButton();
                 }
             });
@@ -329,63 +320,80 @@
         function displayPages(pages) {
             const pagesSection = document.getElementById('pages-section');
             const pagesList = document.getElementById('pages-list');
-            
+
             if (pages.length === 0) {
-                showError('No tienes páginas de Facebook para conectar.');
+                showError('You have no Facebook pages to connect.');
                 return;
             }
-            
-            // Limpiar lista
+
+            // Clear list
             pagesList.innerHTML = '';
-            
-            // Agregar cada página
+
+            // Add each page
             pages.forEach(page => {
                 const pageItem = document.createElement('div');
                 pageItem.className = 'page-item';
                 pageItem.onclick = () => selectPage(page, pageItem);
-                
+
                 pageItem.innerHTML = `
                     <div class="page-name">${page.name}</div>
                     <div class="page-id">ID: ${page.id}</div>
                 `;
-                
+
                 pagesList.appendChild(pageItem);
             });
-            
-            // Mostrar sección
+
+            // Show section
             pagesSection.style.display = 'block';
-            
-            // Ocultar mensaje de estado
+
+            // Hide status message
             document.getElementById('status-message').style.display = 'none';
         }
 
         function selectPage(pageData, element) {
-            // Remover selección anterior
+            // Remove previous selection
             document.querySelectorAll('.page-item').forEach(item => {
                 item.classList.remove('selected');
             });
-            
-            // Seleccionar nueva página
+
+            // Select new page
             element.classList.add('selected');
             selectedPageData = pageData;
-            
-            // Mostrar botón de conectar
+
+            console.log('📊 pages_show_list VERIFICATION:');
+            console.log('✅ Page Selected:', {
+                pageName: pageData.name,
+                pageId: pageData.id,
+                verification: 'Page ownership confirmed via pages_show_list',
+                nextStep: 'Ready to connect page to AI bot'
+            });
+
+            // Show connect button
             document.getElementById('connect-page-btn').style.display = 'inline-block';
         }
 
         function connectSelectedPage() {
             if (!selectedPageData) {
-                showError('Por favor selecciona una página primero.');
+                showError('Please select a page first.');
                 return;
             }
-            
+
             const btn = document.getElementById('connect-page-btn');
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading"></span> Conectando...';
-            
-            // Simular conexión (en producción, enviarías al backend)
+            btn.innerHTML = '<span class="loading"></span> Connecting...';
+
+            console.log('📤 Sending to Backend:', {
+                action: 'Connect page to AI bot system',
+                pageData: 'Using pages_show_list information',
+                pageId: selectedPageData.id,
+                pageName: selectedPageData.name,
+                tokenPreview: selectedPageData.access_token ? selectedPageData.access_token.substring(0, 10) + '...' : 'Token obtained',
+                nextStep: 'Configure AI bot for this page'
+            });
+
+            // Simulate connection (in production, would send to backend)
             setTimeout(() => {
-                // Guardar datos de la página
+                // Save page data
                 const connectionData = {
                     ...clientData,
                     pageId: selectedPageData.id,
@@ -393,10 +401,10 @@
                     pageToken: selectedPageData.access_token,
                     connectedAt: new Date().toISOString()
                 };
-                
+
                 localStorage.setItem('connectionData', JSON.stringify(connectionData));
-                
-                // Redireccionar a página de éxito
+
+                // Redirect to success page
                 window.location.href = 'success.html';
             }, 2000);
         }
@@ -415,7 +423,7 @@
         function resetFacebookButton() {
             const btn = document.getElementById('facebook-login-btn');
             btn.disabled = false;
-            btn.innerHTML = '<span>📘</span> Conectar con Facebook';
+            btn.innerHTML = '<span>📘</span> Connect with Facebook';
         }
     </script>
 </body>

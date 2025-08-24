@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activar Bot - BotFlow AI</title>
+    <title>Activate Bot - BotFlow AI</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
     <style>
         .access-container {
@@ -129,32 +129,32 @@
 <body>
     <div class="access-container">
         <div class="access-card">
-            <h1 class="access-title">🤖 Activar Bot</h1>
+            <h1 class="access-title">🤖 Activate Bot</h1>
             <p class="access-subtitle">
-                Ingresa el código de acceso que recibiste por email para conectar tu página de Facebook
+                Enter the access code I provided to connect your Facebook page to my AI bot system
             </p>
             
             <form id="access-form">
-                <input 
-                    type="text" 
-                    id="access-code" 
+                <input
+                    type="text"
+                    id="access-code"
                     class="access-input"
-                    placeholder="Código de acceso"
+                    placeholder="Access Code"
                     maxlength="12"
                     required
                 >
-                
+
                 <button type="submit" class="access-button" id="verify-btn">
-                    Verificar Acceso
+                    Verify Access
                 </button>
             </form>
             
             <div id="error-message" class="error-message"></div>
             <div id="success-message" class="success-message"></div>
             
-            <!-- Solo para demo/video -->
+            <!-- Demo codes for video -->
             <div class="demo-codes">
-                <div class="demo-title">📹 Códigos de Demo (Solo para video)</div>
+                <div class="demo-title">📹 Demo Codes (For video demonstration)</div>
                 <div class="demo-code" onclick="fillCode('REST001')">REST001</div>
                 <div class="demo-code" onclick="fillCode('SOLAR002')">SOLAR002</div>
                 <div class="demo-code" onclick="fillCode('INMOB003')">INMOB003</div>
@@ -164,36 +164,36 @@
     </div>
 
     <script>
-        // Códigos válidos para demo
+        // Valid demo codes
         const VALID_CODES = {
             'REST001': {
-                client: 'Restaurante La Cocina',
+                client: 'My Restaurant Bot Service',
                 bot: 'restaurante',
                 plan: 'standard'
             },
             'SOLAR002': {
-                client: 'ALTERNA Energía Solar',
+                client: 'My Solar Energy Bot Service',
                 bot: 'alterna',
                 plan: 'premium'
             },
             'INMOB003': {
-                client: 'InmoVentas Pro',
+                client: 'My Real Estate Bot Service',
                 bot: 'inmobiliaria',
                 plan: 'premium'
             },
             'WEBDEV004': {
-                client: 'WebDev Pro',
+                client: 'My Web Development Bot Service',
                 bot: 'webdev',
                 plan: 'basic'
             }
         };
 
-        // Llenar código de demo
+        // Fill demo code
         function fillCode(code) {
             document.getElementById('access-code').value = code;
         }
 
-        // Manejar formulario
+        // Handle form submission
         document.getElementById('access-form').addEventListener('submit', function(e) {
             e.preventDefault();
             verifyAccess();
@@ -204,39 +204,39 @@
             const errorDiv = document.getElementById('error-message');
             const successDiv = document.getElementById('success-message');
             const verifyBtn = document.getElementById('verify-btn');
-            
-            // Limpiar mensajes
+
+            // Clear messages
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
-            
+
             if (!code) {
-                showError('Por favor ingresa un código de acceso');
+                showError('Please enter an access code');
                 return;
             }
-            
-            // Verificar código
+
+            // Verify code
             if (VALID_CODES[code]) {
                 const clientData = VALID_CODES[code];
-                
-                // Mostrar éxito
-                successDiv.innerHTML = `✅ Código válido para: ${clientData.client}`;
+
+                // Show success
+                successDiv.innerHTML = `✅ Valid code for: ${clientData.client}`;
                 successDiv.style.display = 'block';
-                
-                // Deshabilitar botón
+
+                // Disable button
                 verifyBtn.disabled = true;
-                verifyBtn.textContent = 'Redirigiendo...';
-                
-                // Guardar datos en localStorage
+                verifyBtn.textContent = 'Redirecting...';
+
+                // Save data to localStorage
                 localStorage.setItem('clientData', JSON.stringify(clientData));
                 localStorage.setItem('accessCode', code);
-                
-                // Redireccionar después de 2 segundos
+
+                // Redirect after 2 seconds
                 setTimeout(() => {
                     window.location.href = 'connect.html';
                 }, 2000);
-                
+
             } else {
-                showError('Código de acceso inválido. Contacta a soporte.');
+                showError('Invalid access code. Please contact support.');
             }
         }
 
@@ -246,7 +246,7 @@
             errorDiv.style.display = 'block';
         }
 
-        // Auto-focus en el input
+        // Auto-focus on input
         document.getElementById('access-code').focus();
     </script>
 </body>
