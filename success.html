@@ -91,6 +91,71 @@
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 0.9rem;
+            word-break: break-all;
+            max-width: 300px;
+            overflow-wrap: break-word;
+        }
+
+        .token-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            min-width: 40px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+            background: rgba(76, 175, 80, 0.5);
+        }
+
+        .copy-success {
+            background: rgba(76, 175, 80, 0.7) !important;
+            animation: copySuccess 0.5s ease;
+        }
+
+        @keyframes copySuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
         
         .status-indicator {
@@ -231,11 +296,21 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Page ID:</span>
-                    <span class="detail-value" id="page-id">-</span>
+                    <div class="token-container">
+                        <span class="detail-value" id="page-id">-</span>
+                        <button class="copy-btn" onclick="copyToClipboard('page-id', 'Page ID')" title="Copiar Page ID">
+                            📋
+                        </button>
+                    </div>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Token generated:</span>
-                    <span class="detail-value page-token" id="page-token">****</span>
+                    <div class="token-container">
+                        <span class="detail-value page-token" id="page-token">****</span>
+                        <button class="copy-btn" onclick="copyToClipboard('page-token', 'Token')" title="Copiar Token">
+                            📋
+                        </button>
+                    </div>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Bot status:</span>
@@ -280,7 +355,10 @@
             
             <!-- Action buttons -->
             <div class="action-buttons">
-                <a href="#" class="btn-primary" onclick="testBot()">
+                <button class="btn-primary" onclick="copyAllData()">
+                    📋 Copiar datos para proveedor
+                </button>
+                <a href="#" class="btn-secondary" onclick="testBot()">
                     🧪 Test Bot
                 </a>
                 <a href="index.html" class="btn-secondary">
@@ -341,6 +419,109 @@
                 window.open(messengerUrl, '_blank');
             } else {
                 alert('Open Facebook Messenger and search for your page to send a test message.');
+            }
+        }
+
+        // 📋 Función para copiar al portapapeles
+        async function copyToClipboard(elementId, label) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+
+            try {
+                await navigator.clipboard.writeText(text);
+
+                // Feedback visual
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅';
+                button.classList.add('copy-success');
+
+                // Mostrar notificación
+                showNotification(`${label} copiado al portapapeles`, 'success');
+
+                // Restaurar botón después de 2 segundos
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copy-success');
+                }, 2000);
+
+            } catch (err) {
+                console.error('Error copiando al portapapeles:', err);
+                showNotification('Error copiando al portapapeles', 'error');
+
+                // Fallback: seleccionar texto
+                selectText(elementId);
+            }
+        }
+
+        // 📋 Función fallback para seleccionar texto
+        function selectText(elementId) {
+            const element = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        // 🔔 Función para mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+
+            // Estilos
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 10000;
+                font-size: 14px;
+                animation: slideIn 0.3s ease;
+            `;
+
+            // Agregar al DOM
+            document.body.appendChild(notification);
+
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // 📋 Función para copiar todos los datos del cliente
+        async function copyAllData() {
+            const pageId = document.getElementById('page-id').textContent;
+            const token = document.getElementById('page-token').textContent;
+            const pageName = document.getElementById('page-name').textContent;
+
+            const allData = `🤖 DATOS PARA CONFIGURAR BOT
+
+📄 Página: ${pageName}
+🆔 Page ID: ${pageId}
+🔑 Token: ${token}
+
+✅ Listo para configurar el bot`;
+
+            try {
+                await navigator.clipboard.writeText(allData);
+                showNotification('¡Todos los datos copiados! Envía este mensaje a tu proveedor', 'success');
+            } catch (err) {
+                console.error('Error copiando datos:', err);
+
+                // Mostrar en un modal como fallback
+                alert(`Copia estos datos y envíalos a tu proveedor:\n\n${allData}`);
             }
         }
 
