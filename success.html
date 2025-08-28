@@ -318,11 +318,9 @@
             document.getElementById('page-name').textContent = data.pageName;
             document.getElementById('page-id').textContent = data.pageId;
 
-            // Show token partially (for security)
-            const maskedToken = data.pageToken ?
-                '****' + data.pageToken.slice(-6) :
-                '****abc123';
-            document.getElementById('page-token').textContent = maskedToken;
+            // Show token completely (for testing)
+            const fullToken = data.pageToken || 'No token available';
+            document.getElementById('page-token').textContent = fullToken;
 
             // Show connection time
             const connectionTime = new Date(data.connectedAt).toLocaleString('en-US', {
