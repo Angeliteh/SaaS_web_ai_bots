@@ -31,8 +31,8 @@
   label.className = "angel-chat-label";
   // Bilingual label messages
   const labelMessages = [
-    "¡Prueba mi agente de IA personal! Pregunta sobre mí, mi experiencia o mis proyectos.",
-    "Try my personal AI agent! Ask about me, my experience, or my projects."
+    "¡Prueba mi agente de IA de este sitio! Es una muestra del servicio que ofrezco.",
+    "Try my AI agent for this wesite! Its a demostration of the service im offering."
   ];
   let labelIndex = 0;
   let labelCycles = 0;
@@ -96,7 +96,6 @@
   win.innerHTML = `
     <div class="angel-chat-header">
       <span>${BOT_NAME}</span>
-      <span style="font-size:12px;opacity:0.7;">Online</span>
     </div>
     <div class="angel-chat-messages" id="angel-messages"></div>
     <div class="angel-chat-input">
@@ -114,7 +113,7 @@
   const closeChatBtn = document.createElement("span");
   closeChatBtn.innerHTML = "&times;";
   closeChatBtn.title = "Cerrar chat";
-  closeChatBtn.style.cssText = "position:absolute;top:10px;right:18px;font-size:2rem;cursor:pointer;z-index:10;color:#fff;opacity:0.7;transition:opacity 0.2s;";
+  closeChatBtn.style.cssText = "position:absolute;right:18px;font-size:2rem;cursor:pointer;z-index:10;color:#fff;opacity:0.7;transition:opacity 0.2s;";
   closeChatBtn.addEventListener("mouseenter",()=>closeChatBtn.style.opacity="1");
   closeChatBtn.addEventListener("mouseleave",()=>closeChatBtn.style.opacity="0.7");
   closeChatBtn.addEventListener("click",()=>{
@@ -182,16 +181,15 @@
   // Mensaje inicial de bienvenida y explicación
   function addWelcomeMessages() {
     const welcomeES =
-      "\nEste es un agente IA que implementé para mi portafolio. " +
-      "\nPuede responder preguntas sobre mí, mis experiencias y mis proyectos. " +
-      "\nPuedes escribir en español o inglés, pero trata de mantener el mismo idioma durante la conversación. " +
-      "\nEl Agente solo funciona dentro de esta página.";
+      "\nEste es un agente IA que implementé este sitio web. " +
+      "\nPuede responder preguntas sobre los agentes y el servicio que ofrezco. " +
+      "\nPuedes escribir en español o inglés, si usaras ingles mencionalo en tu primer mensaje. "
+
     const welcomeEN =
-      "\nThis is an AI agent I built for my portfolio. " +
-      "\nIt can answer questions about me, my experience, and my projects. " +
+      "\nThis is an AI agent I built for my website. " +
+      "\nIt can answer questions about the agents im offering to automate messages. " +
       "\nYou can write in English or Spanish, but try to keep the same language during the conversation. " +
-      "\nIf the Agent answers in Spanish just ask it to speak in english specifically before your first message" +
-      "\nThe agent only works within this page.";
+      "\n If the Agent answers in Spanish just ask it to speak in english specifically before your first message" 
     addMessage(welcomeES, "bot");
     addMessage(welcomeEN, "bot");
   }
