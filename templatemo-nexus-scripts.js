@@ -348,6 +348,43 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
+        // Simple modal logic
+        function openModalById(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.add('active');
+            el.setAttribute('aria-hidden', 'false');
+            el.setAttribute('aria-modal', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModals() {
+            document.querySelectorAll('.modal.active').forEach(m => {
+                m.classList.remove('active');
+                m.setAttribute('aria-hidden', 'true');
+                m.setAttribute('aria-modal', 'false');
+            });
+            document.body.style.overflow = '';
+        }
+        document.querySelectorAll('.open-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = btn.getAttribute('data-modal');
+                if (id) openModalById(id);
+            });
+        });
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target?.getAttribute && target.getAttribute('data-close') === 'modal') {
+                closeModals();
+            }
+            if (target?.classList && target.classList.contains('modal-close')) {
+                closeModals();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModals();
+        });
+
         // Stats counter animation
         const animateStats = () => {
             const stats = document.querySelectorAll('.stat-number');
@@ -429,33 +466,51 @@ https://templatemo.com/tm-594-nexus-flow
         `;
         document.head.appendChild(style);
 
-        // Contact form submission
-        document.querySelector('.btn-submit').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            if (name && email && message) {
-                // Simulate form submission
-                this.textContent = 'TRANSMITTING...';
-                this.style.background = 'linear-gradient(135deg, var(--primary-cyan), var(--primary-pink))';
-                
-                setTimeout(() => {
-                    this.textContent = 'TRANSMISSION COMPLETE';
-                    this.style.background = 'var(--primary-cyan)';
-                    
-                    // Clear form
+        // Contact form submission to Google Apps Script
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitBtn = contactForm.querySelector('.btn-submit');
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                if (!name || !email || !message) return;
+                const action = contactForm.getAttribute('action');
+                try {
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Enviando...';
+                        submitBtn.disabled = true;
+                    }
+                    const res = await fetch(action, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nombre: name, email: email, mensaje: message })
+                    });
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Enviado';
+                        submitBtn.style.background = 'var(--primary-cyan)';
+                    }
                     document.getElementById('name').value = '';
                     document.getElementById('email').value = '';
                     document.getElementById('message').value = '';
-                    
-                    // Reset button after 3 seconds
                     setTimeout(() => {
-                        this.textContent = 'Transmit Message';
-                        this.style.background = '';
-                    }, 3000);
-                }, 2000);
-            }
-        });
+                        if (submitBtn) {
+                            submitBtn.textContent = document.documentElement.lang === 'en' ? 'Send Message' : 'Enviar Mensaje';
+                            submitBtn.disabled = false;
+                            submitBtn.style.background = '';
+                        }
+                    }, 2500);
+                } catch (err) {
+                    console.error(err);
+                    if (submitBtn) {
+                        submitBtn.textContent = document.documentElement.lang === 'en' ? 'Error. Try again' : 'Error. Intenta de nuevo';
+                        setTimeout(() => {
+                            submitBtn.textContent = document.documentElement.lang === 'en' ? 'Send Message' : 'Enviar Mensaje';
+                            submitBtn.disabled = false;
+                        }, 2500);
+                    }
+                }
+            });
+        }
