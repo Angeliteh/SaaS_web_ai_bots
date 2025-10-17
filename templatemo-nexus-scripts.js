@@ -383,7 +383,7 @@ https://templatemo.com/tm-594-nexus-flow
                     giro: document.getElementById('pc-giro-premium').value,
                     descripcion: document.getElementById('pc-descripcion-premium').value,
                     plan: 'Premium',
-                    precio: 'MXN $1300/mes',
+                    precio: 'USD $70/mes',
                     fecha: new Date().toISOString()
                 };
                 

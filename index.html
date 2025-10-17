@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="icon" type="image/png" href="images/ilustrador.png">
     <!-- SEO Meta Tags -->
     <title>BotFlow AI - Chatbots IA para WhatsApp, Messenger e Instagram | Desde $40/mes</title>
     <meta name="description" content="Automatiza tu atención al cliente con chatbots IA para WhatsApp, Facebook Messenger e Instagram. Convierte visitantes en clientes 24/7. Planes desde $40 USD/mes. Implementación en 2-4 días.">
@@ -167,6 +167,9 @@
     }
     </script>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
+    
+    <!-- PayPal SDK - Carga una sola vez para ambos planes -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA7hq6VOFN3pgZRJM5kycn0ChkDrEafkSgxFv_LmGXgJpShPuhPeUKYIK_2jDPuvahQa60M7mMaiKu3yQ&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 </head>
 <body id="top">
     <!-- Enhanced Background Elements -->
@@ -284,80 +287,84 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features fade-up" id="features">
-        <div class="features-container">
-            <div class="section-header">
-                <h2 class="section-title" data-i18n="features.title">Cómo Funciona Nuestra Tecnología</h2>
-                <p class="section-subtitle" data-i18n="features.subtitle">Arquitectura profesional que permite automatizar hasta 50 negocios simultáneamente</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 data-i18n="features.social.title">Integración con Redes Sociales</h3>
-                    <p data-i18n="features.social.desc">Utilizo el SDK oficial de Meta para conectar WhatsApp, Messenger e Instagram. Tu página se registra en mi app de Meta Developers, lo que me da acceso a mensajes mediante Webhook API. Cuando un cliente escribe, el mensaje llega a mi servidor privado, el bot procesa con IA y responde automáticamente en menos de 2 segundos.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💻</div>
-                    <h3 data-i18n="features.web.title">Bots para Sitios Web</h3>
-                    <p data-i18n="features.web.desc">Para sitios web, instalo un widget de chat personalizable que se integra con un simple script. El widget envía mensajes a mi servidor mediante webhook, igual que las redes sociales. Si no tienes sitio web, puedo crearlo para ti con el bot ya integrado. El widget es 100% personalizable (colores, posición, mensajes).</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
-                    <h3 data-i18n="features.architecture.title">Arquitectura Horizontal Escalable</h3>
-                    <p data-i18n="features.architecture.desc">Todo funciona en mi servidor privado con arquitectura horizontal, permitiendo manejar hasta 50 bots simultáneos con mínimo consumo energético. Cada bot es independiente pero comparte la infraestructura, optimizando recursos. Los bots funcionan en paralelo sin interferencias entre sí.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 data-i18n="features.database.title">Base de Datos Centralizada</h3>
-                    <p data-i18n="features.database.desc">Todos los datos se guardan en Supabase (base de datos empresarial). Mantengo persistencia de mensajes, sesiones y contextos organizados y centralizados. Esto permite que el bot recuerde conversaciones anteriores y mantenga contexto. Tú accedes a tu dashboard para ver conversaciones, leads y estadísticas en tiempo real.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3 data-i18n="features.personalization.title">Personalización Total por Negocio</h3>
-                    <p data-i18n="features.personalization.desc">Cada bot se entrena con información específica de tu negocio: productos, servicios, precios, FAQs, tono de voz. La información es completamente personalizada por bot y función específica. El bot aprende de cada conversación y mejora continuamente sus respuestas basado en feedback real.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 data-i18n="features.security.title">Seguridad y Privacidad</h3>
-                    <p data-i18n="features.security.desc">Todos los datos están encriptados con estándares empresariales. Uso Supabase para almacenamiento seguro y cumplo con protocolos de privacidad. Cada cliente tiene acceso solo a sus propios datos. Las conversaciones se mantienen privadas y seguras, con backups automáticos diarios.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Bot Types Section -->
     <section class="bots fade-up" id="bots">
         <div class="bots-container">
             <div class="section-header">
-                <h2 class="section-title" data-i18n="bots.title">Tipos de Bots</h2>
-                <p class="section-subtitle" data-i18n="bots.subtitle">Elige dónde quieres automatizar: tu sitio web o tus redes sociales</p>
+                <h2 class="section-title" data-i18n="bots.mainTitle">¿Qué son los Agentes IA Conversacionales?</h2>
+                <p class="section-subtitle" data-i18n="bots.mainSubtitle">Reemplaza a las personas que responden mensajes en tu negocio con agentes inteligentes que trabajan 24/7</p>
+            </div>
+
+            <!-- Explicación conceptual -->
+            <div class="bots-intro">
+                <div class="intro-content">
+                    <div class="intro-icon">🤖</div>
+                    <h3 data-i18n="bots.introTitle">Automatización Inteligente de Conversaciones</h3>
+                    <p data-i18n="bots.introPara1">
+                        Los agentes IA conversacionales son asistentes virtuales que <strong>simulan a la perfección</strong> a una persona real respondiendo mensajes. Gracias a los modelos de lenguaje avanzados (LLM), pueden mantener conversaciones naturales, humanas y contextuales con tus clientes.
+                    </p>
+                    <p data-i18n="bots.introPara2">
+                        <strong>¿Por qué son necesarios?</strong> Porque tu negocio recibe las mismas preguntas una y otra vez: precios, disponibilidad, horarios, ubicación, servicios. Un agente IA responde todo esto <strong>instantáneamente, sin errores, sin descansos y sin límites</strong>. La información fluye sin parar, 24/7, con calidad profesional y realismo humano.
+                    </p>
+                    <div class="intro-benefits">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">⚡</span>
+                            <span data-i18n="bots.benefit1">Respuestas instantáneas (menos de 2 segundos)</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🎯</span>
+                            <span data-i18n="bots.benefit2">Información siempre precisa y actualizada</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">💰</span>
+                            <span data-i18n="bots.benefit3">Ahorra tiempo y dinero en atención al cliente</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🌙</span>
+                            <span data-i18n="bots.benefit4">Trabaja 24/7, incluso cuando duermes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separador -->
+            <div class="section-divider">
+                <h3 class="divider-title" data-i18n="bots.dividerTitle">Elige Dónde Quieres Automatizar</h3>
+                <p class="divider-subtitle" data-i18n="bots.dividerSubtitle">Dos opciones: tu sitio web o tus redes sociales (o ambos)</p>
             </div>
 
             <div class="bots-grid">
                 <div class="bot-card">
                     <div class="feature-icon">💻</div>
                     <h3 data-i18n="bots.web.title">Bot para Sitio Web</h3>
-                    <p data-i18n="bots.web.desc">Atiende visitantes de tu web en tiempo real, capta leads y responde FAQs.</p>
-                    <button class="btn-secondary open-modal" data-modal="modal-web" data-i18n="bots.demo">Ver demo</button>
+                    <p class="bot-card-intro" data-i18n="bots.web.intro">
+                        <strong>Widget de chat inteligente</strong> que se integra en tu sitio web. Atiende a cada visitante como si fuera un empleado real, captura leads automáticamente y responde dudas al instante.
+                    </p>
+                    <p data-i18n="bots.web.desc">
+                        <strong>¿Por qué es útil?</strong> Porque el 70% de visitantes abandonan sitios web sin comprar por falta de atención inmediata. Un bot web convierte visitantes en clientes respondiendo justo cuando tienen dudas.
+                    </p>
+                    <button class="btn-secondary open-modal" data-modal="modal-web" data-i18n="bots.demo">Ver más información</button>
                 </div>
                 <div class="bot-card">
                     <div class="feature-icon">💬</div>
-                    <h3 data-i18n="bots.social.title">Bot para Redes (Messenger/IG/WA)</h3>
-                    <p data-i18n="bots.social.desc">Responde automáticamente mensajes en tus redes, 24/7, con tu información.</p>
-                    <button class="btn-secondary open-modal" data-modal="modal-social" data-i18n="bots.demo">Ver demo</button>
+                    <h3 data-i18n="bots.social.title">Bot para Redes Sociales</h3>
+                    <p class="bot-card-intro" data-i18n="bots.social.intro">
+                        <strong>Automatización total</strong> en WhatsApp, Messenger e Instagram. Responde mensajes, clasifica leads, agenda citas y envía información clave sin que muevas un dedo.
+                    </p>
+                    <p data-i18n="bots.social.desc">
+                        <strong>¿Por qué es necesario?</strong> Porque tus clientes esperan respuestas rápidas en redes sociales. Si tardas más de 5 minutos, el 80% se va con la competencia. Un bot responde en 2 segundos, siempre.
+                    </p>
+                    <button class="btn-secondary open-modal" data-modal="modal-social" data-i18n="bots.demo">Ver más información</button>
                 </div>
             </div>
 
             
         </div>
     </section>
+
+    
+
+    
 
     <!-- Success Cases Section -->
     <section class="cases fade-up" id="cases">
@@ -477,7 +484,53 @@
         </div>
     </section>
 
+    <!-- Features Section -->
+    <section class="features fade-up" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="features.title">Cómo Funciona Nuestra Tecnología</h2>
+                <p class="section-subtitle" data-i18n="features.subtitle">Arquitectura profesional que permite automatizar hasta 50 negocios simultáneamente</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 data-i18n="features.social.title">Integración con Redes Sociales</h3>
+                    <p data-i18n="features.social.desc">Utilizo el SDK oficial de Meta para conectar WhatsApp, Messenger e Instagram. Tu página se registra en mi app de Meta Developers, lo que me da acceso a mensajes mediante Webhook API. Cuando un cliente escribe, el mensaje llega a mi servidor privado, el bot procesa con IA y responde automáticamente en menos de 2 segundos.</p>
+                </div>
 
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3 data-i18n="features.web.title">Bots para Sitios Web</h3>
+                    <p data-i18n="features.web.desc">Para sitios web, instalo un widget de chat personalizable que se integra con un simple script. El widget envía mensajes a mi servidor mediante webhook, igual que las redes sociales. Si no tienes sitio web, puedo crearlo para ti con el bot ya integrado. El widget es 100% personalizable (colores, posición, mensajes).</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3 data-i18n="features.architecture.title">Arquitectura Horizontal Escalable</h3>
+                    <p data-i18n="features.architecture.desc">Todo funciona en mi servidor privado con arquitectura horizontal, permitiendo manejar hasta 50 bots simultáneos con mínimo consumo energético. Cada bot es independiente pero comparte la infraestructura, optimizando recursos. Los bots funcionan en paralelo sin interferencias entre sí.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 data-i18n="features.database.title">Base de Datos Centralizada</h3>
+                    <p data-i18n="features.database.desc">Todos los datos se guardan en Supabase (base de datos empresarial). Mantengo persistencia de mensajes, sesiones y contextos organizados y centralizados. Esto permite que el bot recuerde conversaciones anteriores y mantenga contexto. Tú accedes a tu dashboard para ver conversaciones, leads y estadísticas en tiempo real.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 data-i18n="features.personalization.title">Personalización Total por Negocio</h3>
+                    <p data-i18n="features.personalization.desc">Cada bot se entrena con información específica de tu negocio: productos, servicios, precios, FAQs, tono de voz. La información es completamente personalizada por bot y función específica. El bot aprende de cada conversación y mejora continuamente sus respuestas basado en feedback real.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 data-i18n="features.security.title">Seguridad y Privacidad</h3>
+                    <p data-i18n="features.security.desc">Todos los datos están encriptados con estándares empresariales. Uso Supabase para almacenamiento seguro y cumplo con protocolos de privacidad. Cada cliente tiene acceso solo a sus propios datos. Las conversaciones se mantienen privadas y seguras, con backups automáticos diarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Pricing Section -->
     <section class="pricing fade-up" id="pricing">
@@ -504,7 +557,7 @@
                 
                 <div class="pricing-card featured" data-badge="Más Popular">
                     <div class="plan-name" data-i18n="pricing.premium">Premium</div>
-                    <div class="plan-price" data-i18n="pricing.pricePre">MXN $1300</div>
+                    <div class="plan-price" data-i18n="pricing.pricePre">USD $70</div>
                     <div class="plan-period" data-i18n="pricing.perMonth">por mes</div>
                     <ul class="plan-features">
                         <li data-i18n="pricing.pre1">Incluye todo Estándar</li>
@@ -891,7 +944,7 @@
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Precio:</span>
-                        <span class="summary-value">MXN $1300/mes</span>
+                        <span class="summary-value">USD $70/mes</span>
                     </div>
                 </div>
 
@@ -979,12 +1032,11 @@
 
                 <div class="paypal-container">
                     <p class="paypal-info">💳 Pago seguro procesado por PayPal</p>
-                    <a href="#" target="_blank" class="btn-paypal" id="btn-pagar-premium">
-                        Pagar con PayPal
-                    </a>
-                    <p style="color: #999; font-size: 0.9rem; margin-top: 1rem;">
-                        ⚠️ Link de pago pendiente - Proporciona el link de PayPal para Premium
+                    <p style="color: #00d4ff; font-size: 0.95rem; margin-bottom: 1rem;">
+                        Plan Premium: USD $70/mes
                     </p>
+                    <!-- Botón oficial de PayPal Premium (USD) -->
+                    <div id="paypal-container-98VUHN9ZCK4GQ"></div>
                 </div>
 
                 <button class="btn-secondary" onclick="volverFormularioPremium()">
@@ -1102,9 +1154,11 @@
 
                 <div class="paypal-container">
                     <p class="paypal-info" data-i18n="modal.securePayment">💳 Pago seguro procesado por PayPal</p>
-                    <a href="https://www.paypal.com/ncp/payment/3LX8Z3HXSHMDU" target="_blank" class="btn-paypal" id="btn-pagar-standard" data-i18n="modal.payWithPayPal">
-                        Pagar con PayPal
-                    </a>
+                    <p style="color: #00d4ff; font-size: 0.95rem; margin-bottom: 1rem;">
+                        <span data-i18n="modal.planStandard">Plan Estándar:</span> USD $40/mes
+                    </p>
+                    <!-- Botón oficial de PayPal Estándar (USD) -->
+                    <div id="paypal-container-38PVASH59PA4U"></div>
                 </div>
 
                 <button class="btn-secondary" onclick="volverFormulario()" data-i18n="modal.backToEdit">
@@ -1165,9 +1219,28 @@
     </footer>
 
     <script src="templatemo-nexus-scripts.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AelLthbRwr6b3C_j-rwA9dsQhevNfgaBrBYUWeH1_ySw4jcZUo43rdH0CcJYBjjEibIjpX_FUee3KDBy&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
     <script src="js/i18n.js"></script>
     <link rel="stylesheet" href="css/chat-widget.css">
     <script src="js/chat-widget.js"></script>
+    
+    <!-- PayPal Buttons Rendering -->
+    <script>
+        // Esperar a que el SDK de PayPal esté cargado
+        window.addEventListener('load', function() {
+            // Renderizar botón de PayPal para Plan Estándar (USD $40)
+            if (typeof paypal !== 'undefined' && document.getElementById('paypal-container-38PVASH59PA4U')) {
+                paypal.HostedButtons({
+                    hostedButtonId: "38PVASH59PA4U",
+                }).render("#paypal-container-38PVASH59PA4U");
+            }
+            
+            // Renderizar botón de PayPal para Plan Premium (USD $70)
+            if (typeof paypal !== 'undefined' && document.getElementById('paypal-container-98VUHN9ZCK4GQ')) {
+                paypal.HostedButtons({
+                    hostedButtonId: "98VUHN9ZCK4GQ",
+                }).render("#paypal-container-98VUHN9ZCK4GQ");
+            }
+        });
+    </script>
 </body>
 </html>

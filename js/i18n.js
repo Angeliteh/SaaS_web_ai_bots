@@ -122,7 +122,8 @@
         platformLabel: "Plataforma:",
         securePayment: "💳 Pago seguro procesado por PayPal",
         payWithPayPal: "Pagar con PayPal",
-        backToEdit: "← Volver a editar datos"
+        backToEdit: "← Volver a editar datos",
+        planStandard: "Plan Estándar:"
       },
       contact: {
         title: "Contáctame",
@@ -145,13 +146,25 @@
       }
       ,
       bots: {
+        mainTitle: "¿Qué son los Agentes IA Conversacionales?",
+        mainSubtitle: "Reemplaza a las personas que responden mensajes en tu negocio con agentes inteligentes que trabajan 24/7",
+        introTitle: "Automatización Inteligente de Conversaciones",
+        introPara1: "Los agentes IA conversacionales son asistentes virtuales que simulan a la perfección a una persona real respondiendo mensajes. Gracias a los modelos de lenguaje avanzados (LLM), pueden mantener conversaciones naturales, humanas y contextuales con tus clientes.",
+        introPara2: "¿Por qué son necesarios? Porque tu negocio recibe las mismas preguntas una y otra vez: precios, disponibilidad, horarios, ubicación, servicios. Un agente IA responde todo esto instantáneamente, sin errores, sin descansos y sin límites. La información fluye sin parar, 24/7, con calidad profesional y realismo humano.",
+        benefit1: "Respuestas instantáneas (menos de 2 segundos)",
+        benefit2: "Información siempre precisa y actualizada",
+        benefit3: "Ahorra tiempo y dinero en atención al cliente",
+        benefit4: "Trabaja 24/7, incluso cuando duermes",
+        dividerTitle: "Elige Dónde Quieres Automatizar",
+        dividerSubtitle: "Dos opciones: tu sitio web o tus redes sociales (o ambos)",
         title: "Tipos de Bots",
         subtitle: "Elige dónde quieres automatizar: tu sitio web o tus redes sociales",
-        demo: "ver info",
+        demo: "Ver más información",
         web: {
           title: "Bot para Sitio Web",
           subtitle: "Widget de chat inteligente que se integra en tu sitio web",
-          desc: "Atiende visitantes de tu web en tiempo real, capta leads y responde FAQs.",
+          intro: "Widget de chat inteligente que se integra en tu sitio web. Atiende a cada visitante como si fuera un empleado real, captura leads automáticamente y responde dudas al instante.",
+          desc: "¿Por qué es útil? Porque el 70% de visitantes abandonan sitios web sin comprar por falta de atención inmediata. Un bot web convierte visitantes en clientes respondiendo justo cuando tienen dudas.",
           gallery1: "Video: Bot respondiendo en tiempo real",
           gallery1Sub: "(Próximamente: video demo del widget en acción)",
           gallery2: "Dashboard: Panel de control en tiempo real",
@@ -181,7 +194,8 @@
         social: {
           title: "Bot para Redes Sociales",
           subtitle: "Automatiza WhatsApp, Messenger e Instagram con IA",
-          desc: "Responde automáticamente mensajes en tus redes, 24/7, con tu información.",
+          intro: "Automatización total en WhatsApp, Messenger e Instagram. Responde mensajes, clasifica leads, agenda citas y envía información clave sin que muevas un dedo.",
+          desc: "¿Por qué es necesario? Porque tus clientes esperan respuestas rápidas en redes sociales. Si tardas más de 5 minutos, el 80% se va con la competencia. Un bot responde en 2 segundos, siempre.",
           gallery1: "Video: Bot respondiendo mensajes en Messenger",
           gallery1Sub: "(Próximamente: video demo de conversaciones reales)",
           gallery2: "Dashboard: Monitoreo de conversaciones",
@@ -446,7 +460,8 @@
         platformLabel: "Platform:",
         securePayment: "💳 Secure payment processed by PayPal",
         payWithPayPal: "Pay with PayPal",
-        backToEdit: "← Back to edit data"
+        backToEdit: "← Back to edit data",
+        planStandard: "Standard Plan:"
       },
       contact: {
         title: "Contact Me",
@@ -468,13 +483,25 @@
         copyright: "© 2025 BotFlow AI. All rights reserved."
       },
       bots: {
+        mainTitle: "What are AI Conversational Agents?",
+        mainSubtitle: "Replace the people who respond to messages in your business with intelligent agents that work 24/7",
+        introTitle: "Intelligent Conversation Automation",
+        introPara1: "AI conversational agents are virtual assistants that perfectly simulate a real person responding to messages. Thanks to advanced language models (LLM), they can maintain natural, human and contextual conversations with your customers.",
+        introPara2: "Why are they necessary? Because your business receives the same questions over and over again: prices, availability, hours, location, services. An AI agent answers all of this instantly, without errors, without breaks and without limits. Information flows non-stop, 24/7, with professional quality and human realism.",
+        benefit1: "Instant responses (less than 2 seconds)",
+        benefit2: "Always accurate and up-to-date information",
+        benefit3: "Save time and money on customer service",
+        benefit4: "Works 24/7, even when you sleep",
+        dividerTitle: "Choose Where You Want to Automate",
+        dividerSubtitle: "Two options: your website or your social networks (or both)",
         title: "Bot Types",
         subtitle: "Choose where to automate: your website or your social networks",
-        demo: "see info",
+        demo: "See more information",
         web: {
           title: "Website Bot",
           subtitle: "Intelligent chat widget that integrates into your website",
-          desc: "Serve website visitors in real time, capture leads and answer FAQs.",
+          intro: "Intelligent chat widget that integrates into your website. Serves each visitor as if they were a real employee, automatically captures leads and answers questions instantly.",
+          desc: "Why is it useful? Because 70% of visitors abandon websites without buying due to lack of immediate attention. A web bot converts visitors into customers by responding just when they have questions.",
           gallery1: "Video: Bot responding in real time",
           gallery1Sub: "(Coming soon: widget demo video in action)",
           gallery2: "Dashboard: Real-time control panel",
@@ -504,7 +531,8 @@
         social: {
           title: "Social Media Bot",
           subtitle: "Automate WhatsApp, Messenger and Instagram with AI",
-          desc: "Automatically responds to messages on your social networks 24/7 with your information.",
+          intro: "Total automation on WhatsApp, Messenger and Instagram. Responds to messages, classifies leads, schedules appointments and sends key information without you lifting a finger.",
+          desc: "Why is it necessary? Because your customers expect fast responses on social media. If you take more than 5 minutes, 80% go to the competition. A bot responds in 2 seconds, always.",
           gallery1: "Video: Bot responding to messages on Messenger",
           gallery1Sub: "(Coming soon: demo video of real conversations)",
           gallery2: "Dashboard: Conversation monitoring",
