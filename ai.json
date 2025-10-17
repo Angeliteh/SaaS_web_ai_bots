@@ -1,0 +1,29 @@
+{
+  "name": "BotFlow AI",
+  "owner": "Angel",
+  "services": [
+    {
+      "name": "Website Chatbot",
+      "description": "Chat widget for websites to capture leads and answer FAQs using your content.",
+      "plans": [
+        { "id": "standard", "price": { "MXN": 700, "USD": 40 }, "messagesIncluded": 200 },
+        { "id": "premium", "price": { "MXN": 1300, "USD": 70 }, "messagesIncluded": 500 }
+      ]
+    },
+    {
+      "name": "Social Chatbot",
+      "description": "Automated replies for Messenger/Instagram/WhatsApp with analytics and lead capture.",
+      "plans": [
+        { "id": "standard", "price": { "MXN": 700, "USD": 40 }, "messagesIncluded": 200 },
+        { "id": "premium", "price": { "MXN": 1300, "USD": 70 }, "messagesIncluded": 500 }
+      ]
+    }
+  ],
+  "contact": {
+    "form": "https://botsaiservices.online/#contact",
+    "email": ""
+  },
+  "extraMessages": { "packSize": 100, "price": { "USD": 10, "MXN": 180 } }
+}
+
+

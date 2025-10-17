@@ -319,6 +319,110 @@ https://templatemo.com/tm-594-nexus-flow
             }
         });
 
+        // Variables globales para datos del cliente
+        let clienteData = {};
+        let clienteDataPremium = {};
+
+        // Formulario pre-compra ESTÁNDAR
+        const preCompraForm = document.getElementById('preCompraForm');
+        if (preCompraForm) {
+            preCompraForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Capturar datos del formulario
+                clienteData = {
+                    nombre: document.getElementById('pc-nombre').value,
+                    email: document.getElementById('pc-email').value,
+                    telefono: document.getElementById('pc-telefono').value,
+                    empresa: document.getElementById('pc-empresa').value,
+                    plataforma: document.getElementById('pc-plataforma').value,
+                    giro: document.getElementById('pc-giro').value,
+                    descripcion: document.getElementById('pc-descripcion').value,
+                    plan: 'Estándar',
+                    precio: 'MXN $700/mes',
+                    fecha: new Date().toISOString()
+                };
+                
+                // Enviar datos a Google Sheets
+                try {
+                    await fetch('https://script.google.com/macros/s/AKfycbxaRELSHPXsM5i3JLOQ7JZClKgnJvkKTp2vjXO0Kj0jpbchfhdvxyvrRXYX6_XS0F6Y/exec', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(clienteData)
+                    });
+                } catch (error) {
+                    console.warn('Error enviando datos pre-compra:', error);
+                }
+                
+                // Mostrar confirmación y datos
+                document.getElementById('confirm-nombre').textContent = clienteData.nombre;
+                document.getElementById('confirm-email').textContent = clienteData.email;
+                document.getElementById('confirm-empresa').textContent = clienteData.empresa;
+                document.getElementById('confirm-plataforma').textContent = clienteData.plataforma;
+                
+                // Cambiar a paso de pago
+                document.getElementById('paso-formulario').style.display = 'none';
+                document.getElementById('paso-pago').style.display = 'block';
+            });
+        }
+
+        // Formulario pre-compra PREMIUM
+        const preCompraFormPremium = document.getElementById('preCompraFormPremium');
+        if (preCompraFormPremium) {
+            preCompraFormPremium.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Capturar datos del formulario
+                clienteDataPremium = {
+                    nombre: document.getElementById('pc-nombre-premium').value,
+                    email: document.getElementById('pc-email-premium').value,
+                    telefono: document.getElementById('pc-telefono-premium').value,
+                    empresa: document.getElementById('pc-empresa-premium').value,
+                    plataforma: document.getElementById('pc-plataforma-premium').value,
+                    giro: document.getElementById('pc-giro-premium').value,
+                    descripcion: document.getElementById('pc-descripcion-premium').value,
+                    plan: 'Premium',
+                    precio: 'MXN $1300/mes',
+                    fecha: new Date().toISOString()
+                };
+                
+                // Enviar datos a Google Sheets
+                try {
+                    await fetch('https://script.google.com/macros/s/AKfycbxaRELSHPXsM5i3JLOQ7JZClKgnJvkKTp2vjXO0Kj0jpbchfhdvxyvrRXYX6_XS0F6Y/exec', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(clienteDataPremium)
+                    });
+                } catch (error) {
+                    console.warn('Error enviando datos pre-compra Premium:', error);
+                }
+                
+                // Mostrar confirmación y datos
+                document.getElementById('confirm-nombre-premium').textContent = clienteDataPremium.nombre;
+                document.getElementById('confirm-email-premium').textContent = clienteDataPremium.email;
+                document.getElementById('confirm-empresa-premium').textContent = clienteDataPremium.empresa;
+                document.getElementById('confirm-plataforma-premium').textContent = clienteDataPremium.plataforma;
+                
+                // Cambiar a paso de pago
+                document.getElementById('paso-formulario-premium').style.display = 'none';
+                document.getElementById('paso-pago-premium').style.display = 'block';
+            });
+        }
+
+        // Función para volver al formulario ESTÁNDAR
+        window.volverFormulario = function() {
+            document.getElementById('paso-pago').style.display = 'none';
+            document.getElementById('paso-formulario').style.display = 'block';
+        };
+
+        // Función para volver al formulario PREMIUM
+        window.volverFormularioPremium = function() {
+            document.getElementById('paso-pago-premium').style.display = 'none';
+            document.getElementById('paso-formulario-premium').style.display = 'block';
+        };
+
         // Scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -514,3 +618,73 @@ https://templatemo.com/tm-594-nexus-flow
                 }
             });
         }
+
+        // Gallery carousel for bot modals
+        function initializeGalleryCarousel() {
+            const modals = document.querySelectorAll('.modal-bot');
+            
+            modals.forEach(modal => {
+                const dots = modal.querySelectorAll('.dot');
+                const items = modal.querySelectorAll('.gallery-item');
+                let currentSlide = 0;
+                let autoPlayInterval;
+
+                function showSlide(index) {
+                    // Remove active class from all
+                    items.forEach(item => item.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    
+                    // Add active class to current
+                    if (items[index]) items[index].classList.add('active');
+                    if (dots[index]) dots[index].classList.add('active');
+                    
+                    currentSlide = index;
+                }
+
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % items.length;
+                    showSlide(currentSlide);
+                }
+
+                function startAutoPlay() {
+                    autoPlayInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+                }
+
+                function stopAutoPlay() {
+                    if (autoPlayInterval) {
+                        clearInterval(autoPlayInterval);
+                    }
+                }
+
+                // Add click event to dots
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        stopAutoPlay();
+                        showSlide(index);
+                        startAutoPlay();
+                    });
+                });
+
+                // Start autoplay when modal opens
+                const modalElement = modal;
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'aria-hidden') {
+                            const isHidden = modalElement.getAttribute('aria-hidden') === 'true';
+                            if (!isHidden) {
+                                showSlide(0);
+                                startAutoPlay();
+                            } else {
+                                stopAutoPlay();
+                            }
+                        }
+                    });
+                });
+
+                observer.observe(modalElement, { attributes: true });
+            });
+        }
+
+        // Initialize gallery carousel
+        initializeGalleryCarousel();
+    

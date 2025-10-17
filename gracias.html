@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Confirmado! - BotFlow AI</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .gracias-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin: 2rem auto;
+        }
+        
+        .success-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        
+        .success-title {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .success-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .subscription-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid #667eea;
+        }
+        
+        .subscription-info p {
+            margin: 0.5rem 0;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .subscription-info strong {
+            color: #667eea;
+        }
+        
+        .cliente-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cliente-info p {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+        
+        .confirmacion-importante {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(102, 187, 106, 0.1));
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .confirmacion-importante h2 {
+            color: #4caf50;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .confirmacion-importante p {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .next-steps {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .next-steps h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        .step-text strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .contact-section h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-method {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .contact-method:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .contact-method .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method .label {
+            display: block;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 0.3rem;
+        }
+        
+        .contact-method .value {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .btn-home {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .gracias-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .success-title {
+                font-size: 2rem;
+            }
+            
+            .success-icon {
+                font-size: 4rem;
+            }
+            
+            .step-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gracias-container">
+        <div class="success-header">
+            <div class="success-icon">🎉</div>
+            <h1 class="success-title">¡Pago Confirmado!</h1>
+            <p class="success-subtitle">Gracias por confiar en BotFlow AI. Tu suscripción ha sido activada exitosamente.</p>
+        </div>
+        <div class="subscription-info">
+            <p><strong>ID de Suscripción:</strong> <span id="subscriptionId">Cargando...</span></p>
+            <p><strong>Plan:</strong> Estándar - MXN $700/mes</p>
+            <p><strong>Fecha de inicio:</strong> <span id="startDate">Hoy</span></p>
+        </div>
+        <div class="cliente-info">
+            <p><strong>👤 Cliente:</strong> <span id="clienteNombre">-</span></p>
+            <p><strong>📧 Email:</strong> <span id="clienteEmail">-</span></p>
+        </div>
+        <div class="confirmacion-importante">
+            <h2>📞 Te Contactaremos en Menos de 24 Horas</h2>
+            <p>Ya tenemos toda tu información y confirmamos tu pago. Nos pondremos en contacto contigo muy pronto para confirmar todos los detalles de tu bot, aclarar dudas y comenzar con la configuración personalizada.</p>
+        </div>
+        <div class="next-steps">
+            <h3>🚀 Próximos Pasos</h3>
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-text"><strong>Confirmación y Consulta (Hoy - 24h)</strong>Te contactaremos para confirmar los detalles de tu negocio, resolver dudas y definir exactamente cómo quieres que funcione tu bot.</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-text"><strong>Configuración Inicial (Día 1-2)</strong>Comenzaremos a configurar tu bot con la información proporcionada y lo adaptaremos a tu industria y necesidades específicas.</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-text"><strong>Entrenamiento y Pruebas (Día 2-3)</strong>Entrenaremos el bot con tu contenido, FAQs y casos de uso. Realizaremos pruebas exhaustivas para asegurar respuestas precisas.</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-text"><strong>Entrega y Capacitación (Día 3-4)</strong>Te entregaremos el bot completamente funcional, te capacitaremos en su uso y te daremos acceso al dashboard de monitoreo.</div>
+            </div>
+        </div>
+        <div class="contact-section">
+            <h3>💬 ¿Necesitas Contactarnos?</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Estamos disponibles para resolver cualquier duda o consulta</p>
+            <div class="contact-methods">
+                <a href="mailto:contacto@botsaiservices.online" class="contact-method">
+                    <div class="icon">📧</div>
+                    <span class="label">Email</span>
+                    <span class="value">temporal2@gmail.com</span>
+                </a>
+                <a href="https://wa.me/521234567890" target="_blank" class="contact-method">
+                    <div class="icon">💬</div>
+                    <span class="label">WhatsApp</span>
+                    <span class="value">+52 618 258 2819</span>
+                </a>
+                <a href="tel:+521234567890" class="contact-method">
+                    <div class="icon">📱</div>
+                    <span class="label">Teléfono</span>
+                    <span class="value">+52 618 258 2819</span>
+                </a>
+            </div>
+        </div>
+        <div class="back-home">
+            <a href="index.html" class="btn-home">🏠 Volver al Inicio</a>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const subscriptionId = urlParams.get('subscription');
+            if (subscriptionId) {
+                document.getElementById('subscriptionId').textContent = subscriptionId;
+            } else {
+                document.getElementById('subscriptionId').textContent = 'No disponible';
+            }
+            const nombre = urlParams.get('nombre');
+            if (nombre) {
+                document.getElementById('clienteNombre').textContent = nombre;
+            }
+            const email = urlParams.get('email');
+            if (email) {
+                document.getElementById('clienteEmail').textContent = email;
+            }
+            const today = new Date().toLocaleDateString('es-MX', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('startDate').textContent = today;
+        };
+    </script>
+</body>
+</html>
