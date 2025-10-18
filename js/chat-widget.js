@@ -1,6 +1,6 @@
 (() => {
   // 🔧 CONFIGURACIÓN
-  const BOT_ID = "botsia"; // Cambia esto según el bot que uses
+  const BOT_ID = "botsai"; // Cambia esto según el bot que uses
   const BACKEND_URL = "https://bots-ai-websites.onrender.com"; // Cambia a tu URL de producción
   const ENDPOINT = `${BACKEND_URL}/api/webchat/${BOT_ID}/message`;
   const BOT_NAME = "botsaiservices AI Agent"; // Cambia según el bot
