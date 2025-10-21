@@ -77,6 +77,10 @@
   box-shadow: 0 10px 28px rgba(0,0,0,0.55);
   overflow: hidden;
   font-family: system-ui, sans-serif;
+  /* Animación inicial (movido desde línea 127) */
+  opacity: 0;
+  transform: scale(0.7) translateY(60px);
+  transition: opacity 0.35s cubic-bezier(.4,1.4,.6,1), transform 0.35s cubic-bezier(.4,1.4,.6,1);
 }
 
 @media (max-width: 600px) {
@@ -93,10 +97,10 @@
   }
   
   /* Cuando el teclado está abierto, el chat se ajusta automáticamente */
+  /* IMPORTANTE: Sin !important para permitir que JS controle height dinámicamente */
   .angel-chat-window.keyboard-open {
-    height: auto !important;
-    max-height: calc(100vh - 60px) !important;
-    bottom: 10px !important;
+    /* height y max-height son controlados por JavaScript */
+    bottom: 10px;
   }
   
   .angel-chat-label {
@@ -124,11 +128,7 @@
   }
 }
 
-.angel-chat-window {
-  opacity: 0;
-  transform: scale(0.7) translateY(60px);
-  transition: opacity 0.35s cubic-bezier(.4,1.4,.6,1), transform 0.35s cubic-bezier(.4,1.4,.6,1);
-}
+/* Estilos de animación movidos al bloque principal arriba (línea 64) */
 .angel-chat-window.angel-chat-open {
   opacity: 1;
   transform: scale(1) translateY(0);
@@ -173,13 +173,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0; /* No se comprime cuando aparece el teclado */
 }
 
 .angel-chat-messages {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: #0f172a; /* fondo principal */
+  scroll-behavior: smooth; /* Scroll suave */
+  -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
 }
 
 .angel-msg {
@@ -219,6 +223,7 @@
   border-top: 1px solid #1e293b;
   padding: 8px;
   background: #111827;
+  flex-shrink: 0; /* No se comprime cuando aparece el teclado */
 }
 
 .angel-chat-input textarea {
