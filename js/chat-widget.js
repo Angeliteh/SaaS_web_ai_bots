@@ -99,7 +99,7 @@
     </div>
     <div class="angel-chat-messages" id="angel-messages"></div>
     <div class="angel-chat-input">
-      <textarea id="angel-input" rows="1" placeholder="Escribe un mensaje..."></textarea>
+      <textarea id="angel-input" rows="1" placeholder="Escribe un mensaje..." maxlength="1000"></textarea>
       <button class="angel-send" id="angel-send">➤</button>
     </div>
   `;
@@ -108,6 +108,14 @@
   const messagesEl = win.querySelector("#angel-messages");
   const inputEl = win.querySelector("#angel-input");
   const sendBtn = win.querySelector("#angel-send");
+
+  // Auto-expandir textarea según contenido
+  function autoExpandTextarea() {
+    inputEl.style.height = 'auto';
+    const newHeight = Math.min(inputEl.scrollHeight, 120); // Máximo 120px (~5 líneas)
+    inputEl.style.height = newHeight + 'px';
+  }
+  inputEl.addEventListener('input', autoExpandTextarea);
 
   // Botón de cerrar (X) para el chat
   const closeChatBtn = document.createElement("span");
@@ -150,18 +158,44 @@
       }, 350);
     }
   });
-  // Ajustar alto del chat dinámicamente en móvil cuando aparece el teclado
+  
+  // Manejo mejorado del teclado en móvil
   if (isMobile()) {
-    let initialVH = window.innerHeight;
-    function adjustChatHeight() {
-      // Cuando el teclado aparece, window.innerHeight disminuye
-      const vh = window.innerHeight;
-      win.style.height = Math.min(550, vh - 40) + "px";
-    }
-    window.addEventListener("resize", adjustChatHeight);
-    // Restaurar alto al cerrar el teclado
+    let keyboardOpen = false;
+    
+    // Cuando el input recibe focus (teclado aparece)
+    inputEl.addEventListener("focus", () => {
+      keyboardOpen = true;
+      win.classList.add("keyboard-open");
+      // Scroll al final de los mensajes
+      setTimeout(() => {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }, 300);
+    });
+    
+    // Cuando el input pierde focus (teclado desaparece)
     inputEl.addEventListener("blur", () => {
-      win.style.height = "550px";
+      keyboardOpen = false;
+      setTimeout(() => {
+        if (!keyboardOpen) {
+          win.classList.remove("keyboard-open");
+        }
+      }, 100);
+    });
+    
+    // Detectar cambios de tamaño de viewport (teclado)
+    let lastHeight = window.innerHeight;
+    window.addEventListener("resize", () => {
+      const currentHeight = window.innerHeight;
+      // Si la altura disminuyó significativamente, el teclado está abierto
+      if (lastHeight - currentHeight > 150 && chatOpen) {
+        win.classList.add("keyboard-open");
+      }
+      // Si la altura aumentó, el teclado se cerró
+      else if (currentHeight - lastHeight > 150 && chatOpen) {
+        win.classList.remove("keyboard-open");
+      }
+      lastHeight = currentHeight;
     });
   }
 
@@ -245,6 +279,8 @@
     const text = inputEl.value.trim();
     if (!text) return;
     inputEl.value = "";
+    // Resetear altura del textarea
+    inputEl.style.height = 'auto';
     addMessage(text, "user");
     addTyping();
 
