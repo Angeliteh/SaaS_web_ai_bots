@@ -5,7 +5,6 @@
   right: 20px;
   bottom: 20px;
   z-index: 9999;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
   /* Gradiente moderno cyan a azul */
   background: linear-gradient(135deg, #00d4ff 0%, #1e40af 100%);
   color: #fff;
@@ -80,122 +79,24 @@
   font-family: system-ui, sans-serif;
 }
 
-/* Estilos base del header (aplican en desktop y móvil) */
-.angel-chat-header {
-  padding: 16px;
-  background: #1e293b;
-  color: #f9fafb;
-  font-weight: 600;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-  position: relative;
-  flex-shrink: 0;
-}
-
-.angel-chat-header .close-chat-btn {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 2rem;
-  line-height: 1;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.angel-chat-header .close-chat-btn:hover {
-  opacity: 1;
-}
-
-/* Estilos base de mensajes (aplican en desktop y móvil) */
-.angel-chat-messages {
-  flex: 1 1 auto;
-  padding: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: #0f172a;
-  min-height: 0;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Estilos base del input (aplican en desktop y móvil) */
-.angel-chat-input {
-  display: flex;
-  border-top: 1px solid #1e293b;
-  padding: 8px;
-  background: #111827;
-  flex-shrink: 0;
-}
-
 @media (max-width: 600px) {
-  /* FULLSCREEN en móvil DEBAJO del header del sitio */
   .angel-chat-window {
-    position: fixed !important;
-    top: 70px !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
+    right: 10px;
+    left: auto;
+    bottom: 90px;
+    width: calc(100vw - 20px);
+    max-width: 420px;
+    /* Altura dinámica controlada por JS cuando aparece el teclado */
+    height: 70vh;
+    max-height: 85vh;
+    border-radius: 16px;
+  }
+  
+  /* Cuando el teclado está abierto, el chat se ajusta automáticamente */
+  .angel-chat-window.keyboard-open {
     height: auto !important;
-    min-height: calc(100vh - 70px) !important;
-    max-height: calc(100vh - 70px) !important;
-    border-radius: 0;
-    z-index: 10001;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  
-  /* Ocultar botón cuando el chat está abierto en móvil */
-  .angel-chat-btn.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-  
-  /* Header fijo en la parte superior */
-  .angel-chat-header {
-    padding: 12px 16px;
-    min-height: 50px;
-  }
-  
-  /* Mensajes con altura flexible */
-  .angel-chat-messages {
-    flex: 1 1 0;
-    min-height: 100px;
-    padding: 8px;
-  }
-  
-  /* Input siempre visible en la parte inferior */
-  .angel-chat-input {
-    padding: 8px;
-    min-height: 60px;
-  }
-  
-  .angel-chat-input textarea {
-    font-size: 16px !important;
-    padding: 10px 12px;
-    min-height: 42px;
-    max-height: 100px;
-  }
-  
-  .angel-send {
-    min-height: 42px;
-    min-width: 50px;
-    padding: 0 16px;
-    font-size: 1.2rem;
+    max-height: calc(100vh - 60px) !important;
+    bottom: 10px !important;
   }
   
   .angel-chat-label {
@@ -263,6 +164,23 @@
   transform: translateY(-2px);
 }
 
+.angel-chat-header {
+  padding: 12px;
+  background: #1e293b; /* más oscuro */
+  color: #f9fafb;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.angel-chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #0f172a; /* fondo principal */
+}
 
 .angel-msg {
   margin: 8px 0;
@@ -294,6 +212,13 @@
   background: #1f2937;
   color: #e5e7eb;
   border-bottom-left-radius: 6px;
+}
+
+.angel-chat-input {
+  display: flex;
+  border-top: 1px solid #1e293b;
+  padding: 8px;
+  background: #111827;
 }
 
 .angel-chat-input textarea {
