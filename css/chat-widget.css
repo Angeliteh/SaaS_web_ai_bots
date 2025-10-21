@@ -5,6 +5,7 @@
   right: 20px;
   bottom: 20px;
   z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   /* Gradiente moderno cyan a azul */
   background: linear-gradient(135deg, #00d4ff 0%, #1e40af 100%);
   color: #fff;
@@ -80,23 +81,66 @@
 }
 
 @media (max-width: 600px) {
+  /* FULLSCREEN en móvil DEBAJO del header del sitio */
   .angel-chat-window {
-    right: 10px;
-    left: auto;
-    bottom: 90px;
-    width: calc(100vw - 20px);
-    max-width: 420px;
-    /* Altura dinámica controlada por JS cuando aparece el teclado */
-    height: 70vh;
-    max-height: 85vh;
-    border-radius: 16px;
+    position: fixed;
+    top: 70px; /* Altura del header del sitio */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 70px);
+    max-width: 100%;
+    max-height: calc(100% - 70px);
+    border-radius: 0;
+    /* Usar dvh (dynamic viewport height) si está disponible */
+    height: calc(100dvh - 70px);
+    z-index: 10001; /* Por encima del botón (9999) pero debajo del header (10000) */
   }
   
-  /* Cuando el teclado está abierto, el chat se ajusta automáticamente */
-  .angel-chat-window.keyboard-open {
-    height: auto !important;
-    max-height: calc(100vh - 60px) !important;
-    bottom: 10px !important;
+  /* Ocultar botón cuando el chat está abierto en móvil */
+  .angel-chat-btn.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  
+  /* Header con botón de cerrar más visible */
+  .angel-chat-header {
+    padding: 16px;
+    font-size: 16px;
+    background: #1e293b;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  }
+  
+  /* Mensajes ocupan todo el espacio disponible */
+  .angel-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    /* Importante: usar height mínimo para que funcione el flex */
+    min-height: 0;
+  }
+  
+  /* Input area fijo en la parte inferior */
+  .angel-chat-input {
+    padding: 12px;
+    background: #111827;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+    /* Evitar que se mueva con el teclado */
+    position: sticky;
+    bottom: 0;
+  }
+  
+  .angel-chat-input textarea {
+    font-size: 16px; /* Evita zoom en iOS */
+    padding: 12px;
+    min-height: 44px; /* Tamaño táctil recomendado */
+  }
+  
+  .angel-send {
+    min-height: 44px;
+    padding: 0 20px;
+    font-size: 1.3rem;
   }
   
   .angel-chat-label {
@@ -165,14 +209,41 @@
 }
 
 .angel-chat-header {
-  padding: 12px;
+  padding: 16px;
   background: #1e293b; /* más oscuro */
   color: #f9fafb;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  position: relative;
+}
+
+.angel-chat-header .close-chat-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.angel-chat-header .close-chat-btn:hover {
+  opacity: 1;
 }
 
 .angel-chat-messages {

@@ -96,6 +96,7 @@
   win.innerHTML = `
     <div class="angel-chat-header">
       <span>${BOT_NAME}</span>
+      <button class="close-chat-btn" title="Cerrar chat">&times;</button>
     </div>
     <div class="angel-chat-messages" id="angel-messages"></div>
     <div class="angel-chat-input">
@@ -108,6 +109,7 @@
   const messagesEl = win.querySelector("#angel-messages");
   const inputEl = win.querySelector("#angel-input");
   const sendBtn = win.querySelector("#angel-send");
+  const closeChatBtn = win.querySelector(".close-chat-btn");
 
   // Auto-expandir textarea según contenido
   function autoResizeTextarea() {
@@ -123,36 +125,37 @@
     inputEl.style.height = 'auto';
   }
 
-  // Botón de cerrar (X) para el chat
-  const closeChatBtn = document.createElement("span");
-  closeChatBtn.innerHTML = "&times;";
-  closeChatBtn.title = "Cerrar chat";
-  closeChatBtn.style.cssText = "position:absolute;right:18px;font-size:2rem;cursor:pointer;z-index:10;color:#fff;opacity:0.7;transition:opacity 0.2s;";
-  closeChatBtn.addEventListener("mouseenter",()=>closeChatBtn.style.opacity="1");
-  closeChatBtn.addEventListener("mouseleave",()=>closeChatBtn.style.opacity="0.7");
-  closeChatBtn.addEventListener("click",()=>{
+  // Event listener para botón de cerrar
+  closeChatBtn.addEventListener("click", () => {
     win.classList.remove("angel-chat-open");
-    setTimeout(()=>{
+    setTimeout(() => {
       win.style.display = "none";
       chatOpen = false;
       showLabel();
+      // Restaurar scroll del body y mostrar botón
+      if (isMobile()) {
+        document.body.style.overflow = "";
+        btn.classList.remove("hidden");
+      }
     }, 350);
   });
-  win.appendChild(closeChatBtn);
 
   // Toggle ventana (sin focus automático en móvil)
   function isMobile() {
     return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
   }
   btn.addEventListener("click", () => {
-    const opening = win.style.display === "none";
-    if (opening) {
+    if (!chatOpen) {
       win.style.display = "flex";
       setTimeout(()=>win.classList.add("angel-chat-open"), 10);
       chatOpen = true;
       hideLabel();
-      // Solo focus automático en desktop
-      if (!isMobile()) {
+      // En móvil, prevenir scroll del body y ocultar botón
+      if (isMobile()) {
+        document.body.style.overflow = "hidden";
+        btn.classList.add("hidden");
+      } else {
+        // Solo focus automático en desktop
         inputEl.focus();
       }
     } else {
@@ -161,90 +164,21 @@
         win.style.display = "none";
         chatOpen = false;
         showLabel();
+        // Restaurar scroll del body y mostrar botón
+        if (isMobile()) {
+          document.body.style.overflow = "";
+          btn.classList.remove("hidden");
+        }
       }, 350);
     }
   });
-  // Ajustar alto del chat dinámicamente en móvil cuando aparece el teclado
+  // En móvil, simplemente hacer scroll al último mensaje cuando el input recibe focus
   if (isMobile()) {
-    let keyboardOpen = false;
-    const initialHeight = window.innerHeight;
-    
-    // Usar Visual Viewport API si está disponible (más preciso para teclados virtuales)
-    if (window.visualViewport) {
-      function handleViewportResize() {
-        const viewportHeight = window.visualViewport.height;
-        const windowHeight = window.innerHeight;
-        const heightDiff = windowHeight - viewportHeight;
-        
-        // Si hay una diferencia significativa, el teclado está abierto
-        if (heightDiff > 150) {
-          keyboardOpen = true;
-          // Calcular altura disponible (viewport - márgenes)
-          const availableHeight = viewportHeight - 20;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-          win.style.bottom = "10px";
-          
-          // Scroll al último mensaje
-          setTimeout(() => {
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          }, 150);
-        } else if (keyboardOpen && heightDiff < 50) {
-          // Teclado cerrado
-          keyboardOpen = false;
-          win.style.height = "";
-          win.style.bottom = "";
-        }
-      }
-      
-      window.visualViewport.addEventListener("resize", handleViewportResize);
-      window.visualViewport.addEventListener("scroll", handleViewportResize);
-    } else {
-      // Fallback para navegadores sin Visual Viewport API
-      function adjustChatHeight() {
-        const currentHeight = window.innerHeight;
-        const heightDiff = initialHeight - currentHeight;
-        
-        if (heightDiff > 150) {
-          keyboardOpen = true;
-          const availableHeight = currentHeight - 40;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-          win.style.bottom = "10px";
-          
-          setTimeout(() => {
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          }, 100);
-        } else if (keyboardOpen) {
-          keyboardOpen = false;
-          win.style.height = "";
-          win.style.bottom = "";
-        }
-      }
-      
-      window.addEventListener("resize", adjustChatHeight);
-    }
-    
-    // Cuando el input recibe focus
     inputEl.addEventListener("focus", () => {
-      // Pequeño delay para que el teclado aparezca primero
+      // Scroll al último mensaje después de que el teclado aparezca
       setTimeout(() => {
-        if (window.visualViewport) {
-          const viewportHeight = window.visualViewport.height;
-          const availableHeight = viewportHeight - 20;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-        }
-        // Scroll al último mensaje
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, 300);
-    });
-    
-    // Cuando pierde focus
-    inputEl.addEventListener("blur", () => {
-      setTimeout(() => {
-        if (!keyboardOpen) {
-          win.style.height = "";
-          win.style.bottom = "";
-        }
-      }, 100);
     });
   }
 
