@@ -5,23 +5,60 @@
   right: 20px;
   bottom: 20px;
   z-index: 9999;
-  background: #1e40af; /* azul oscuro */
+  /* Gradiente moderno cyan a azul */
+  background: linear-gradient(135deg, #00d4ff 0%, #1e40af 100%);
   color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 72px;
-  height: 72px;
-  font-size: 2.2rem;
+  /* Botón alargado horizontal */
+  border-radius: 50px;
+  width: 180px;
+  height: 60px;
+  padding: 0 24px;
+  font-size: 1rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  gap: 10px;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
-  transition: background 0.2s, box-shadow 0.2s;
+  /* Sombra con glow cyan */
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Borde sutil */
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  /* Animación de pulso sutil */
+  animation: pulse-glow 3s ease-in-out infinite;
 }
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(0, 212, 255, 0.6), 0 8px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.angel-chat-btn::before {
+  content: '💬'; /* Emoji de chat */
+  font-size: 1.5rem;
+}
+
+.angel-chat-btn::after {
+  content: 'Chat con IA';
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
 .angel-chat-btn:hover {
-  background: #2563eb;
+  background: linear-gradient(135deg, #00e5ff 0%, #2563eb 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 30px rgba(0, 212, 255, 0.6), 0 12px 48px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 212, 255, 0.5);
+}
+
+.angel-chat-btn:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .angel-chat-window {
@@ -46,7 +83,7 @@
   .angel-chat-window {
     right: 10px;
     left: auto;
-    bottom: 80px;
+    bottom: 90px;
     width: calc(100vw - 20px);
     max-width: 420px;
     /* Altura dinámica controlada por JS cuando aparece el teclado */
@@ -65,15 +102,25 @@
   .angel-chat-label {
     right: 20px;
     bottom: 100px;
-    max-width: calc(100vw - 120px);
-    font-size: 1rem;
-    padding: 12px 18px;
+    max-width: calc(100vw - 220px);
+    font-size: 0.9rem;
+    padding: 10px 16px;
   }
   
+  /* Botón más compacto en móvil pero manteniendo el estilo */
   .angel-chat-btn {
-    width: 64px;
-    height: 64px;
-    font-size: 2rem;
+    width: 160px;
+    height: 56px;
+    padding: 0 20px;
+    font-size: 0.9rem;
+  }
+  
+  .angel-chat-btn::before {
+    font-size: 1.3rem;
+  }
+  
+  .angel-chat-btn::after {
+    font-size: 0.85rem;
   }
 }
 
@@ -89,24 +136,32 @@
 /* Etiqueta flotante para el chat */
 .angel-chat-label {
   position: fixed;
-  right: 110px;
-  bottom: 40px;
-  background: #1e293b;
+  right: 220px; /* Ajustado para el botón más ancho */
+  bottom: 35px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: #f9fafb;
   padding: 14px 22px;
   border-radius: 16px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.2), 0 2px 8px rgba(0,0,0,0.3);
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.3s;
+  transition: all 0.3s ease;
   z-index: 10000;
   max-width: 320px;
   min-width: 180px;
   text-align: left;
   line-height: 1.4;
   cursor: pointer;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.angel-chat-label:hover {
+  background: linear-gradient(135deg, #1e293b 0%, #1e40af 100%);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3), 0 4px 12px rgba(0,0,0,0.4);
+  border-color: rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .angel-chat-header {

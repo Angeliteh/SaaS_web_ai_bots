@@ -22,7 +22,7 @@
   // Crear botón
   const btn = document.createElement("button");
   btn.className = "angel-chat-btn";
-  btn.innerHTML = "💬";
+  btn.innerHTML = ""; // Vacío porque el contenido se agrega con CSS ::before y ::after
   btn.title = `Chat con ${BOT_NAME}`;
   document.body.appendChild(btn);
 
