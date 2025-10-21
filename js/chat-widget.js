@@ -248,38 +248,61 @@
     });
     
     // ========================================
-    // SOLUCIÓN MEJORADA: Mantener teclado sin interferir con scroll
+    // SOLUCIÓN: Prevenir que el teclado se cierre al tocar el chat
     // ========================================
     
-    let isScrolling = false;
-    let scrollTimeout = null;
+    // Mantener el input enfocado cuando se toca el área de mensajes
+    messagesEl.addEventListener("touchstart", (e) => {
+      // Si el teclado está abierto, mantener el focus en el input
+      if (keyboardOpen || document.activeElement === inputEl) {
+        // No hacer nada, dejar que el scroll funcione
+        // Pero después de un momento, devolver el focus al input
+        setTimeout(() => {
+          if (chatOpen && !inputEl.contains(e.target)) {
+            inputEl.focus();
+          }
+        }, 10);
+      }
+    }, { passive: true });
     
-    // Detectar cuando el usuario está haciendo scroll
+    // Prevenir que el blur cierre el teclado cuando se toca el área de mensajes
+    let touchingMessages = false;
+    
     messagesEl.addEventListener("touchstart", () => {
-      isScrolling = false;
+      touchingMessages = true;
     }, { passive: true });
     
-    messagesEl.addEventListener("touchmove", () => {
-      isScrolling = true;
-      clearTimeout(scrollTimeout);
-    }, { passive: true });
-    
-    messagesEl.addEventListener("touchend", () => {
-      // Esperar un momento para ver si fue scroll o tap
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 150);
-    }, { passive: true });
-    
-    // Solo devolver focus si NO estamos scrolleando
     messagesEl.addEventListener("touchend", () => {
       setTimeout(() => {
-        // Si el teclado está abierto, el input perdió focus, y NO estamos scrolleando
-        if (keyboardOpen && document.activeElement !== inputEl && !isScrolling && chatOpen) {
-          inputEl.focus();
-        }
-      }, 200);
+        touchingMessages = false;
+      }, 100);
     }, { passive: true });
+    
+    // Modificar el blur para no cerrar si estamos tocando mensajes
+    inputEl.addEventListener("blur", (e) => {
+      // Si estamos tocando el área de mensajes, devolver el focus
+      if (touchingMessages && chatOpen) {
+        setTimeout(() => {
+          inputEl.focus();
+        }, 50);
+      }
+    });
+    
+    // Prevenir que tocar fuera del input cierre el teclado
+    win.addEventListener("touchstart", (e) => {
+      // Si el teclado está abierto y tocamos dentro del chat (pero no el input)
+      if (keyboardOpen && !inputEl.contains(e.target) && win.contains(e.target)) {
+        // Prevenir el comportamiento por defecto que cierra el teclado
+        e.stopPropagation();
+        
+        // Mantener el focus en el input después de un pequeño delay
+        setTimeout(() => {
+          if (chatOpen) {
+            inputEl.focus();
+          }
+        }, 10);
+      }
+    }, { passive: false });
   }
 
   // Posicionar la etiqueta cerca del botón
