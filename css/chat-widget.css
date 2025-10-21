@@ -45,7 +45,7 @@
 }
 
 .angel-chat-btn::after {
-  content: 'Chat con IA';
+  content: 'AI Agent';
   font-size: 0.95rem;
   letter-spacing: 0.5px;
 }
