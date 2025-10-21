@@ -246,6 +246,63 @@
         }
       }, 100);
     });
+    
+    // ========================================
+    // SOLUCIÓN: Prevenir que el teclado se cierre al tocar el chat
+    // ========================================
+    
+    // Mantener el input enfocado cuando se toca el área de mensajes
+    messagesEl.addEventListener("touchstart", (e) => {
+      // Si el teclado está abierto, mantener el focus en el input
+      if (keyboardOpen || document.activeElement === inputEl) {
+        // No hacer nada, dejar que el scroll funcione
+        // Pero después de un momento, devolver el focus al input
+        setTimeout(() => {
+          if (chatOpen && !inputEl.contains(e.target)) {
+            inputEl.focus();
+          }
+        }, 10);
+      }
+    }, { passive: true });
+    
+    // Prevenir que el blur cierre el teclado cuando se toca el área de mensajes
+    let touchingMessages = false;
+    
+    messagesEl.addEventListener("touchstart", () => {
+      touchingMessages = true;
+    }, { passive: true });
+    
+    messagesEl.addEventListener("touchend", () => {
+      setTimeout(() => {
+        touchingMessages = false;
+      }, 100);
+    }, { passive: true });
+    
+    // Modificar el blur para no cerrar si estamos tocando mensajes
+    inputEl.addEventListener("blur", (e) => {
+      // Si estamos tocando el área de mensajes, devolver el focus
+      if (touchingMessages && chatOpen) {
+        setTimeout(() => {
+          inputEl.focus();
+        }, 50);
+      }
+    });
+    
+    // Prevenir que tocar fuera del input cierre el teclado
+    win.addEventListener("touchstart", (e) => {
+      // Si el teclado está abierto y tocamos dentro del chat (pero no el input)
+      if (keyboardOpen && !inputEl.contains(e.target) && win.contains(e.target)) {
+        // Prevenir el comportamiento por defecto que cierra el teclado
+        e.stopPropagation();
+        
+        // Mantener el focus en el input después de un pequeño delay
+        setTimeout(() => {
+          if (chatOpen) {
+            inputEl.focus();
+          }
+        }, 10);
+      }
+    }, { passive: false });
   }
 
   // Posicionar la etiqueta cerca del botón

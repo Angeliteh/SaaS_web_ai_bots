@@ -184,6 +184,9 @@
   background: #0f172a; /* fondo principal */
   scroll-behavior: smooth; /* Scroll suave */
   -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
+  /* Permitir scroll táctil sin cerrar el teclado */
+  touch-action: pan-y; /* Solo scroll vertical */
+  overscroll-behavior: contain; /* Prevenir scroll fuera del contenedor */
 }
 
 .angel-msg {
@@ -246,6 +249,10 @@
   /* Scroll personalizado */
   scrollbar-width: thin;
   scrollbar-color: #374151 #1f2937;
+  /* Prevenir zoom en iOS al hacer focus */
+  font-size: 16px; /* Mínimo 16px para prevenir zoom en iOS */
+  /* Mantener el teclado abierto */
+  touch-action: manipulation;
 }
 
 .angel-chat-input textarea::-webkit-scrollbar {
