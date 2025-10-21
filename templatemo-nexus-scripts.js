@@ -138,89 +138,52 @@ https://templatemo.com/tm-594-nexus-flow
             initializeMobileMenu();
         }
 
-        // Generate Matrix Rain Effect
+        // Generate Matrix Rain Effect - DESACTIVADO COMPLETAMENTE
         function generateMatrixRain() {
-            const matrixRain = document.getElementById('matrixRain');
-            const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-            const columns = Math.floor(window.innerWidth / 20);
-            
-            for (let i = 0; i < columns; i++) {
-                const column = document.createElement('div');
-                column.className = 'matrix-column';
-                column.style.left = `${i * 20}px`;
-                column.style.animationDuration = `${Math.random() * 5 + 10}s`;
-                column.style.animationDelay = `${Math.random() * 5}s`;
-                
-                // Generate random characters for the column
-                let text = '';
-                const charCount = Math.floor(Math.random() * 20 + 10);
-                for (let j = 0; j < charCount; j++) {
-                    text += characters[Math.floor(Math.random() * characters.length)] + ' ';
-                }
-                column.textContent = text;
-                
-                matrixRain.appendChild(column);
-            }
+            // NO HACER NADA - consume demasiados recursos
+            return;
         }
 
-        // Generate Floating Particles
+        // Generate Floating Particles - DESACTIVADO COMPLETAMENTE
         function generateParticles() {
-            const particlesContainer = document.getElementById('particlesContainer');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.animationDelay = `${Math.random() * 20}s`;
-                particle.style.animationDuration = `${Math.random() * 10 + 20}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
+            // NO HACER NADA - consume demasiados recursos GPU
+            return;
         }
 
-        // Generate Data Streams
+        // Generate Data Streams - DESACTIVADO COMPLETAMENTE
         function generateDataStreams() {
-            const dataStreams = document.getElementById('dataStreams');
-            const streamCount = 10;
-            
-            for (let i = 0; i < streamCount; i++) {
-                const stream = document.createElement('div');
-                stream.className = 'data-stream';
-                stream.style.top = `${Math.random() * 100}%`;
-                stream.style.left = `-300px`;
-                stream.style.animationDelay = `${Math.random() * 5}s`;
-                stream.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
-                
-                dataStreams.appendChild(stream);
-            }
+            // NO HACER NADA - consume demasiados recursos GPU
+            return;
         }
 
-        // Initialize background effects
-        generateMatrixRain();
-        generateParticles();
-        generateDataStreams();
+        // Initialize background effects - TODOS DESACTIVADOS
+        // generateMatrixRain();
+        // generateParticles();
+        // generateDataStreams();
+        // DESACTIVADO COMPLETAMENTE - consumían GPU excesivamente
 
-        // Regenerate matrix rain on window resize
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                const matrixRain = document.getElementById('matrixRain');
-                matrixRain.innerHTML = '';
-                generateMatrixRain();
-            }, 250);
-        });
+        // Regenerate matrix rain on window resize - DESACTIVADO
+        // let resizeTimer;
+        // window.addEventListener('resize', () => {
+        //     clearTimeout(resizeTimer);
+        //     resizeTimer = setTimeout(() => {
+        //         const matrixRain = document.getElementById('matrixRain');
+        //         matrixRain.innerHTML = '';
+        //         generateMatrixRain();
+        //     }, 250);
+        // });
 
-        // Interactive mouse glow effect (throttled for performance)
+        // Interactive mouse glow effect - DESACTIVADO para mejor rendimiento
         let mouseTimer;
+        let isModalOpen = false;
+        // DESACTIVADO COMPLETAMENTE - causaba lag en todo el PC
+        /*
         document.addEventListener('mousemove', (e) => {
+            if (isModalOpen) return;
             if (!mouseTimer) {
                 mouseTimer = setTimeout(() => {
                     const mouseX = e.clientX;
                     const mouseY = e.clientY;
-                    
-                    // Move orbs slightly based on mouse position
                     const orbs = document.querySelectorAll('.orb');
                     orbs.forEach((orb, index) => {
                         const speed = (index + 1) * 0.02;
@@ -228,59 +191,14 @@ https://templatemo.com/tm-594-nexus-flow
                         const y = (mouseY - window.innerHeight / 2) * speed;
                         orb.style.transform = `translate(${x}px, ${y}px)`;
                     });
-                    
-                    // Make nearby particles glow brighter (desktop only)
-                    if (window.innerWidth > 768) {
-                        const particles = document.querySelectorAll('.particle');
-                        particles.forEach(particle => {
-                            const rect = particle.getBoundingClientRect();
-                            const particleX = rect.left + rect.width / 2;
-                            const particleY = rect.top + rect.height / 2;
-                            const distance = Math.sqrt(Math.pow(mouseX - particleX, 2) + Math.pow(mouseY - particleY, 2));
-                            
-                            if (distance < 150) {
-                                const brightness = 1 - (distance / 150);
-                                particle.style.boxShadow = `0 0 ${20 + brightness * 30}px rgba(0, 255, 255, ${0.5 + brightness * 0.5})`;
-                                particle.style.transform = `scale(${1 + brightness * 0.5})`;
-                            } else {
-                                particle.style.boxShadow = '';
-                                particle.style.transform = '';
-                            }
-                        });
-                    }
-                    
                     mouseTimer = null;
-                }, 16); // ~60fps
+                }, 50);
             }
         });
+        */
 
-        // Add a glow that follows the cursor (desktop only)
-        if (window.innerWidth > 768) {
-            const cursorGlow = document.createElement('div');
-            cursorGlow.style.cssText = `
-                position: fixed;
-                width: 400px;
-                height: 400px;
-                border-radius: 50%;
-                background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-                pointer-events: none;
-                z-index: 9999;
-                transform: translate(-50%, -50%);
-                transition: opacity 0.3s ease;
-                opacity: 0;
-            `;
-            document.body.appendChild(cursorGlow);
-
-            document.addEventListener('mousemove', (e) => {
-                cursorGlow.style.left = e.clientX + 'px';
-                cursorGlow.style.top = e.clientY + 'px';
-                cursorGlow.style.opacity = '1';
-            });
-
-            document.addEventListener('mouseleave', () => {
-                cursorGlow.style.opacity = '0';
-            });
-        }
+        // Cursor glow - DESACTIVADO para mejor rendimiento
+        // DESACTIVADO COMPLETAMENTE - causaba lag
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -452,22 +370,33 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
-        // Simple modal logic
+        // Simple modal logic - OPTIMIZADO sin aria-hidden conflicts
         function openModalById(id) {
             const el = document.getElementById(id);
             if (!el) return;
+            
+            // Set flag to disable heavy effects
+            isModalOpen = true;
+            
+            // Abrir modal sin aria-hidden para evitar conflictos
             el.classList.add('active');
-            el.setAttribute('aria-hidden', 'false');
+            el.removeAttribute('aria-hidden');
             el.setAttribute('aria-modal', 'true');
             document.body.style.overflow = 'hidden';
         }
+        
         function closeModals() {
             document.querySelectorAll('.modal.active').forEach(m => {
                 m.classList.remove('active');
-                m.setAttribute('aria-hidden', 'true');
-                m.setAttribute('aria-modal', 'false');
+                m.removeAttribute('aria-modal');
+                // NO usar aria-hidden cuando hay elementos focuseables dentro
             });
             document.body.style.overflow = '';
+            
+            // Re-enable effects after modal closes
+            setTimeout(() => {
+                isModalOpen = false;
+            }, 300);
         }
         document.querySelectorAll('.open-modal').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -493,7 +422,16 @@ https://templatemo.com/tm-594-nexus-flow
         const animateStats = () => {
             const stats = document.querySelectorAll('.stat-number');
             stats.forEach(stat => {
-                const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+                const originalText = stat.textContent.trim();
+                
+                // Si contiene "/" (como 24/7), no animar
+                if (originalText.includes('/')) {
+                    return;
+                }
+                
+                const target = parseInt(originalText.replace(/[^\d]/g, ''));
+                if (isNaN(target)) return;
+                
                 let count = 0;
                 const increment = target / 100;
                 const timer = setInterval(() => {
@@ -502,7 +440,7 @@ https://templatemo.com/tm-594-nexus-flow
                         clearInterval(timer);
                         count = target;
                     }
-                    const suffix = stat.textContent.replace(/[\d]/g, '');
+                    const suffix = originalText.replace(/[\d]/g, '');
                     stat.textContent = Math.floor(count) + suffix;
                 }, 20);
             });
@@ -533,32 +471,8 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
-        // Random cyber text effects
-        const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
-        
-        setInterval(() => {
-            const randomText = cyberTexts[Math.floor(Math.random() * cyberTexts.length)];
-            const tempElement = document.createElement('div');
-            tempElement.textContent = randomText;
-            tempElement.style.cssText = `
-                position: fixed;
-                top: ${Math.random() * 100}vh;
-                left: ${Math.random() * 100}vw;
-                color: var(--primary-cyan);
-                font-size: 0.8rem;
-                font-weight: 700;
-                z-index: 1000;
-                opacity: 0.7;
-                pointer-events: none;
-                animation: fadeOut 3s ease-out forwards;
-                text-shadow: 0 0 10px var(--primary-cyan);
-            `;
-            document.body.appendChild(tempElement);
-            
-            setTimeout(() => {
-                document.body.removeChild(tempElement);
-            }, 3000);
-        }, 5000);
+        // Random cyber text effects - DESACTIVADO para mejor rendimiento
+        // DESACTIVADO COMPLETAMENTE
 
         // Add fadeOut animation
         const style = document.createElement('style');
@@ -647,7 +561,8 @@ https://templatemo.com/tm-594-nexus-flow
                 }
 
                 function startAutoPlay() {
-                    autoPlayInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+                    // DESACTIVADO - causa lag en modales
+                    // autoPlayInterval = setInterval(nextSlide, 5000);
                 }
 
                 function stopAutoPlay() {
@@ -665,23 +580,9 @@ https://templatemo.com/tm-594-nexus-flow
                     });
                 });
 
-                // Start autoplay when modal opens
-                const modalElement = modal;
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === 'aria-hidden') {
-                            const isHidden = modalElement.getAttribute('aria-hidden') === 'true';
-                            if (!isHidden) {
-                                showSlide(0);
-                                startAutoPlay();
-                            } else {
-                                stopAutoPlay();
-                            }
-                        }
-                    });
-                });
-
-                observer.observe(modalElement, { attributes: true });
+                // Inicializar carrusel cuando modal se abre - SIN MutationObserver
+                // El MutationObserver causaba lag severo en desktop
+                // Ahora usamos eventos de clase directamente
             });
         }
 

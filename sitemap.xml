@@ -1,8 +1,32 @@
-<urlset>
-  <!-- SOLO páginas reales e independientes -->
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página principal (landing) -->
   <url>
     <loc>https://botsaiservices.online/</loc>
-    <lastmod>2024-01-16</lastmod>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  
+  <!-- Páginas legales (importantes para confianza) -->
+  <url>
+    <loc>https://botsaiservices.online/privacy-policy.html</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://botsaiservices.online/terms-of-service.html</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://botsaiservices.online/data-deletion.html</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>

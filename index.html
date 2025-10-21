@@ -208,6 +208,10 @@
             <div class="nav-bottom">
                 <a href="#contact" class="cyber-button" data-i18n="cta.demo">Demo Gratis</a>
             </div>
+            <button id="langToggleDesktop" class="lang-switch-desktop" aria-label="Language">
+                <span class="lang-icon">🌐</span>
+                <span id="langLabelDesktop">Español</span>
+            </button>
             <button id="langToggle" class="lang-switch" aria-label="Language">
                 <span id="langLabel">ES</span>
             </button>
@@ -721,7 +725,7 @@
 
     <!-- Modals de Bots Mejorados -->
     <!-- Modal Bot para Sitio Web -->
-    <div class="modal modal-bot" id="modal-web" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal modal-bot" id="modal-web" role="dialog">
         <div class="modal-backdrop" data-close="modal"></div>
         <div class="modal-content modal-bot-content" role="document">
             <button class="modal-close" data-close="modal">✕</button>
@@ -823,7 +827,7 @@
     </div>
 
     <!-- Modal Bot para Redes Sociales -->
-    <div class="modal modal-bot" id="modal-social" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal modal-bot" id="modal-social" role="dialog">
         <div class="modal-backdrop" data-close="modal"></div>
         <div class="modal-content modal-bot-content" role="document">
             <button class="modal-close" data-close="modal">✕</button>
@@ -925,91 +929,91 @@
     </div>
 
     <!-- Modal Compra Plan Premium -->
-    <div class="modal modal-compra" id="modal-compra-premium" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal modal-compra" id="modal-compra-premium" role="dialog">
         <div class="modal-backdrop" data-close="modal"></div>
         <div class="modal-content modal-compra-content" role="document">
             <button class="modal-close" data-close="modal">✕</button>
             
             <div class="compra-header">
-                <h2>🛒 Comprar Plan Premium</h2>
-                <p class="compra-subtitle">Completa tus datos y procede al pago</p>
+                <h2 data-i18n="modal.buyPremium">🛒 Comprar Plan Premium</h2>
+                <p class="compra-subtitle" data-i18n="modal.subtitle">Completa tus datos y procede al pago</p>
             </div>
 
             <!-- Paso 1: Formulario -->
             <div id="paso-formulario-premium" class="paso-compra">
                 <div class="plan-summary">
                     <div class="summary-item">
-                        <span class="summary-label">Plan:</span>
-                        <span class="summary-value">Premium</span>
+                        <span class="summary-label" data-i18n="modal.plan">Plan:</span>
+                        <span class="summary-value" data-i18n="pricing.premium">Premium</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Precio:</span>
-                        <span class="summary-value">USD $70/mes</span>
+                        <span class="summary-label" data-i18n="modal.price">Precio:</span>
+                        <span class="summary-value" data-i18n="modal.pricePre">USD $70/mes</span>
                     </div>
                 </div>
 
                 <form id="preCompraFormPremium" class="pre-compra-form">
                     <div class="form-section">
-                        <h3>📋 Información de Contacto</h3>
+                        <h3 data-i18n="modal.contactInfo">📋 Información de Contacto</h3>
                         
                         <div class="form-group">
-                            <label for="pc-nombre-premium">Nombre Completo *</label>
-                            <input type="text" id="pc-nombre-premium" name="nombre" required placeholder="Juan Pérez">
+                            <label for="pc-nombre-premium" data-i18n="modal.fullName">Nombre Completo *</label>
+                            <input type="text" id="pc-nombre-premium" name="nombre" required data-i18n-placeholder="modal.fullNamePh" placeholder="Juan Pérez">
                         </div>
 
                         <div class="form-group">
-                            <label for="pc-email-premium">Email *</label>
-                            <input type="email" id="pc-email-premium" name="email" required placeholder="juan@empresa.com">
+                            <label for="pc-email-premium" data-i18n="modal.email">Email *</label>
+                            <input type="email" id="pc-email-premium" name="email" required data-i18n-placeholder="modal.emailPh" placeholder="juan@empresa.com">
                         </div>
 
                         <div class="form-group">
-                            <label for="pc-telefono-premium">Teléfono / WhatsApp *</label>
-                            <input type="tel" id="pc-telefono-premium" name="telefono" required placeholder="+52 123 456 7890">
+                            <label for="pc-telefono-premium" data-i18n="modal.phone">Teléfono / WhatsApp *</label>
+                            <input type="tel" id="pc-telefono-premium" name="telefono" required data-i18n-placeholder="modal.phonePh" placeholder="+52 123 456 7890">
                         </div>
 
                         <div class="form-group">
-                            <label for="pc-empresa-premium">Nombre del Negocio *</label>
-                            <input type="text" id="pc-empresa-premium" name="empresa" required placeholder="Mi Empresa">
+                            <label for="pc-empresa-premium" data-i18n="modal.businessName">Nombre del Negocio *</label>
+                            <input type="text" id="pc-empresa-premium" name="empresa" required data-i18n-placeholder="modal.businessNamePh" placeholder="Mi Empresa">
                         </div>
                     </div>
 
                     <div class="form-section">
-                        <h3>🤖 Configuración Básica del Bot</h3>
+                        <h3 data-i18n="modal.botConfig">🤖 Configuración Básica del Bot</h3>
                         
                         <div class="form-group">
-                            <label for="pc-plataforma-premium">¿Dónde quieres el bot? *</label>
+                            <label for="pc-plataforma-premium" data-i18n="modal.platform">¿Dónde quieres el bot? *</label>
                             <select id="pc-plataforma-premium" name="plataforma" required>
-                                <option value="">Selecciona una opción</option>
-                                <option value="web">Sitio Web</option>
-                                <option value="messenger">Facebook Messenger</option>
-                                <option value="whatsapp">WhatsApp</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="multiple">Múltiples plataformas</option>
+                                <option value="" data-i18n="modal.platformSelect">Selecciona una opción</option>
+                                <option value="web" data-i18n="modal.platformWeb">Sitio Web</option>
+                                <option value="messenger" data-i18n="modal.platformMessenger">Facebook Messenger</option>
+                                <option value="whatsapp" data-i18n="modal.platformWhatsApp">WhatsApp</option>
+                                <option value="instagram" data-i18n="modal.platformInstagram">Instagram</option>
+                                <option value="multiple" data-i18n="modal.platformMultiple">Múltiples plataformas</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="pc-giro-premium">Giro o Industria *</label>
+                            <label for="pc-giro-premium" data-i18n="modal.industry">Giro o Industria *</label>
                             <select id="pc-giro-premium" name="giro" required>
-                                <option value="">Selecciona una opción</option>
-                                <option value="ecommerce">E-commerce / Tienda Online</option>
-                                <option value="servicios">Servicios Profesionales</option>
-                                <option value="restaurante">Restaurante / Comida</option>
-                                <option value="salud">Salud / Bienestar</option>
-                                <option value="educacion">Educación</option>
-                                <option value="inmobiliaria">Bienes Raíces</option>
-                                <option value="tecnologia">Tecnología</option>
-                                <option value="otro">Otro</option>
+                                <option value="" data-i18n="modal.industrySelect">Selecciona una opción</option>
+                                <option value="ecommerce" data-i18n="modal.industryEcommerce">E-commerce / Tienda Online</option>
+                                <option value="servicios" data-i18n="modal.industryServices">Servicios Profesionales</option>
+                                <option value="restaurante" data-i18n="modal.industryRestaurant">Restaurante / Comida</option>
+                                <option value="salud" data-i18n="modal.industryHealth">Salud / Bienestar</option>
+                                <option value="educacion" data-i18n="modal.industryEducation">Educación</option>
+                                <option value="inmobiliaria" data-i18n="modal.industryRealEstate">Bienes Raíces</option>
+                                <option value="tecnologia" data-i18n="modal.industryTech">Tecnología</option>
+                                <option value="otro" data-i18n="modal.industryOther">Otro</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="pc-descripcion-premium">Descripción Breve de tu Negocio *</label>
-                            <textarea id="pc-descripcion-premium" name="descripcion" required placeholder="¿Qué productos o servicios ofreces?"></textarea>
+                            <label for="pc-descripcion-premium" data-i18n="modal.description">Descripción Breve de tu Negocio *</label>
+                            <textarea id="pc-descripcion-premium" name="descripcion" required data-i18n-placeholder="modal.descriptionPh" placeholder="¿Qué productos o servicios ofreces?"></textarea>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-primary btn-continuar">
+                    <button type="submit" class="btn-primary btn-continuar" data-i18n="modal.continue">
                         Continuar al Pago →
                     </button>
                 </form>
@@ -1019,27 +1023,27 @@
             <div id="paso-pago-premium" class="paso-compra" style="display: none;">
                 <div class="pago-confirmacion">
                     <div class="check-icon">✅</div>
-                    <h3>Datos Guardados Correctamente</h3>
-                    <p>Ahora procede con el pago seguro a través de PayPal</p>
+                    <h3 data-i18n="modal.dataSaved">Datos Guardados Correctamente</h3>
+                    <p data-i18n="modal.proceedPayment">Ahora procede con el pago seguro a través de PayPal</p>
                 </div>
 
                 <div class="datos-guardados">
-                    <p><strong>Nombre:</strong> <span id="confirm-nombre-premium"></span></p>
-                    <p><strong>Email:</strong> <span id="confirm-email-premium"></span></p>
-                    <p><strong>Empresa:</strong> <span id="confirm-empresa-premium"></span></p>
-                    <p><strong>Plataforma:</strong> <span id="confirm-plataforma-premium"></span></p>
+                    <p><strong data-i18n="modal.name">Nombre:</strong> <span id="confirm-nombre-premium"></span></p>
+                    <p><strong data-i18n="modal.email">Email:</strong> <span id="confirm-email-premium"></span></p>
+                    <p><strong data-i18n="modal.company">Empresa:</strong> <span id="confirm-empresa-premium"></span></p>
+                    <p><strong data-i18n="modal.platformLabel">Plataforma:</strong> <span id="confirm-plataforma-premium"></span></p>
                 </div>
 
                 <div class="paypal-container">
-                    <p class="paypal-info">💳 Pago seguro procesado por PayPal</p>
-                    <p style="color: #00d4ff; font-size: 0.95rem; margin-bottom: 1rem;">
+                    <p class="paypal-info" data-i18n="modal.securePayment">💳 Pago seguro procesado por PayPal</p>
+                    <p style="color: #00d4ff; font-size: 0.95rem; margin-bottom: 1rem;" data-i18n="modal.planPremiumLabel">
                         Plan Premium: USD $70/mes
                     </p>
                     <!-- Botón oficial de PayPal Premium (USD) -->
                     <div id="paypal-container-98VUHN9ZCK4GQ"></div>
                 </div>
 
-                <button class="btn-secondary" onclick="volverFormularioPremium()">
+                <button class="btn-secondary" onclick="volverFormularioPremium()" data-i18n="modal.backToEdit">
                     ← Volver a editar datos
                 </button>
             </div>
@@ -1047,7 +1051,7 @@
     </div>
 
     <!-- Modal Compra Plan Estándar -->
-    <div class="modal modal-compra" id="modal-compra-standard" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal modal-compra" id="modal-compra-standard" role="dialog">
         <div class="modal-backdrop" data-close="modal"></div>
         <div class="modal-content modal-compra-content" role="document">
             <button class="modal-close" data-close="modal">✕</button>
