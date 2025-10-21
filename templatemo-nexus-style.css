@@ -1153,9 +1153,10 @@ https://templatemo.com/tm-594-nexus-flow
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-top: 5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding: 0 1rem;
         }
 
         .pricing-card {
@@ -1355,22 +1356,56 @@ https://templatemo.com/tm-594-nexus-flow
 
         /* Language switch */
         .lang-switch {
-            display: inline-flex;
+            display: none; /* Oculto en desktop, solo visible en móvil dentro del menú */
             align-items: center;
             gap: 0.5rem;
+            background: rgba(0,255,255,0.08);
+            border: 1px solid rgba(0,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             color: var(--primary-cyan);
-            border: 1px solid var(--border-color);
-            padding: 0.4rem 0.8rem;
-            border-radius: 999px;
-            background: rgba(0, 0, 0, 0.2);
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
             user-select: none;
         }
         .lang-switch:hover { box-shadow: 0 0 12px rgba(0,255,255,0.25); }
         .lang-switch span { letter-spacing: 1px; }
+
+        /* Language switch mobile */
+        .lang-switch-mobile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            color: var(--primary-cyan);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            user-select: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .lang-switch-mobile:hover {
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .lang-switch-mobile .lang-icon {
+            font-size: 1.3rem;
+        }
+
+        .lang-switch-mobile span {
+            letter-spacing: 1px;
+        }
 
         .footer-links {
             margin-bottom: 2rem;
@@ -1462,7 +1497,11 @@ https://templatemo.com/tm-594-nexus-flow
             .nav-bottom .cyber-button {
                 display: none;
             }
-            .lang-switch { margin-left: auto; }
+            /* Mostrar botón de idioma solo en móvil dentro del menú */
+            .mobile-menu .lang-switch {
+                display: inline-flex;
+                margin-left: auto;
+            }
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -1494,9 +1533,32 @@ https://templatemo.com/tm-594-nexus-flow
             }
             .pricing-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 0.5rem;
+                max-width: 100%;
+            }
+            .pricing-card {
+                padding: 2rem 1.5rem;
+                margin: 0 auto;
+                max-width: 100%;
+                width: 100%;
             }
             .pricing-card.featured {
                 transform: none;
+                margin-top: 0;
+            }
+            .pricing-card.featured::before {
+                font-size: 0.7rem;
+                padding: 0.4rem 1.5rem;
+            }
+            .plan-name {
+                font-size: 1.3rem;
+            }
+            .plan-price {
+                font-size: 2.5rem;
+            }
+            .plan-features {
+                font-size: 0.95rem;
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
