@@ -83,19 +83,20 @@
 @media (max-width: 600px) {
   /* FULLSCREEN en móvil DEBAJO del header del sitio */
   .angel-chat-window {
-    position: fixed;
-    top: 70px; /* Altura del header del sitio */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(100% - 70px);
-    max-width: 100%;
-    max-height: calc(100% - 70px);
+    position: fixed !important;
+    top: 70px !important; /* Altura del header del sitio */
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 70px) !important; /* Usar vh estable, no dvh */
+    max-width: 100% !important;
+    max-height: calc(100vh - 70px) !important;
     border-radius: 0;
-    /* Usar dvh (dynamic viewport height) si está disponible */
-    height: calc(100dvh - 70px);
     z-index: 10001; /* Por encima del botón (9999) pero debajo del header (10000) */
+    /* Evitar que el teclado mueva el chat */
+    transform: none !important;
+    overflow: hidden !important;
   }
   
   /* Ocultar botón cuando el chat está abierto en móvil */
@@ -115,10 +116,14 @@
   
   /* Mensajes ocupan todo el espacio disponible */
   .angel-chat-messages {
-    flex: 1;
+    flex: 1 1 auto;
     overflow-y: auto;
+    overflow-x: hidden;
     /* Importante: usar height mínimo para que funcione el flex */
     min-height: 0;
+    max-height: 100%;
+    /* Scroll suave en iOS */
+    -webkit-overflow-scrolling: touch;
   }
   
   /* Input area fijo en la parte inferior */
@@ -126,9 +131,10 @@
     padding: 12px;
     background: #111827;
     border-top: 1px solid rgba(0, 212, 255, 0.2);
-    /* Evitar que se mueva con el teclado */
-    position: sticky;
-    bottom: 0;
+    /* Flex shrink para que se mantenga visible */
+    flex-shrink: 0;
+    /* Evitar que el teclado lo empuje fuera de vista */
+    position: relative;
   }
   
   .angel-chat-input textarea {

@@ -172,14 +172,25 @@
       }, 350);
     }
   });
-  // En móvil, simplemente hacer scroll al último mensaje cuando el input recibe focus
+  // En móvil, manejar el teclado correctamente
   if (isMobile()) {
+    // Cuando el input recibe focus, hacer scroll al último mensaje
     inputEl.addEventListener("focus", () => {
-      // Scroll al último mensaje después de que el teclado aparezca
+      // Pequeño delay para que el teclado aparezca
       setTimeout(() => {
         messagesEl.scrollTop = messagesEl.scrollHeight;
+        // Asegurar que el input esté visible
+        inputEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }, 300);
     });
+    
+    // Prevenir que el scroll del body afecte al chat
+    win.addEventListener("touchmove", (e) => {
+      // Permitir scroll solo dentro del área de mensajes
+      if (!messagesEl.contains(e.target)) {
+        e.preventDefault();
+      }
+    }, { passive: false });
   }
 
   // Posicionar la etiqueta cerca del botón
