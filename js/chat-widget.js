@@ -99,7 +99,7 @@
     </div>
     <div class="angel-chat-messages" id="angel-messages"></div>
     <div class="angel-chat-input">
-      <textarea id="angel-input" rows="1" placeholder="Escribe un mensaje..." maxlength="1000"></textarea>
+      <textarea id="angel-input" rows="1" placeholder="Escribe un mensaje..."></textarea>
       <button class="angel-send" id="angel-send">➤</button>
     </div>
   `;
@@ -110,12 +110,18 @@
   const sendBtn = win.querySelector("#angel-send");
 
   // Auto-expandir textarea según contenido
-  function autoExpandTextarea() {
-    inputEl.style.height = 'auto';
-    const newHeight = Math.min(inputEl.scrollHeight, 120); // Máximo 120px (~5 líneas)
+  function autoResizeTextarea() {
+    inputEl.style.height = 'auto'; // Reset height
+    const newHeight = Math.min(inputEl.scrollHeight, 120); // Max 120px (~5 líneas)
     inputEl.style.height = newHeight + 'px';
   }
-  inputEl.addEventListener('input', autoExpandTextarea);
+  
+  inputEl.addEventListener('input', autoResizeTextarea);
+  
+  // Reset textarea height después de enviar
+  function resetTextareaHeight() {
+    inputEl.style.height = 'auto';
+  }
 
   // Botón de cerrar (X) para el chat
   const closeChatBtn = document.createElement("span");
@@ -158,44 +164,87 @@
       }, 350);
     }
   });
-  
-  // Manejo mejorado del teclado en móvil
+  // Ajustar alto del chat dinámicamente en móvil cuando aparece el teclado
   if (isMobile()) {
     let keyboardOpen = false;
+    const initialHeight = window.innerHeight;
     
-    // Cuando el input recibe focus (teclado aparece)
+    // Usar Visual Viewport API si está disponible (más preciso para teclados virtuales)
+    if (window.visualViewport) {
+      function handleViewportResize() {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
+        const heightDiff = windowHeight - viewportHeight;
+        
+        // Si hay una diferencia significativa, el teclado está abierto
+        if (heightDiff > 150) {
+          keyboardOpen = true;
+          // Calcular altura disponible (viewport - márgenes)
+          const availableHeight = viewportHeight - 20;
+          win.style.height = Math.min(availableHeight, 550) + "px";
+          win.style.bottom = "10px";
+          
+          // Scroll al último mensaje
+          setTimeout(() => {
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+          }, 150);
+        } else if (keyboardOpen && heightDiff < 50) {
+          // Teclado cerrado
+          keyboardOpen = false;
+          win.style.height = "";
+          win.style.bottom = "";
+        }
+      }
+      
+      window.visualViewport.addEventListener("resize", handleViewportResize);
+      window.visualViewport.addEventListener("scroll", handleViewportResize);
+    } else {
+      // Fallback para navegadores sin Visual Viewport API
+      function adjustChatHeight() {
+        const currentHeight = window.innerHeight;
+        const heightDiff = initialHeight - currentHeight;
+        
+        if (heightDiff > 150) {
+          keyboardOpen = true;
+          const availableHeight = currentHeight - 40;
+          win.style.height = Math.min(availableHeight, 550) + "px";
+          win.style.bottom = "10px";
+          
+          setTimeout(() => {
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+          }, 100);
+        } else if (keyboardOpen) {
+          keyboardOpen = false;
+          win.style.height = "";
+          win.style.bottom = "";
+        }
+      }
+      
+      window.addEventListener("resize", adjustChatHeight);
+    }
+    
+    // Cuando el input recibe focus
     inputEl.addEventListener("focus", () => {
-      keyboardOpen = true;
-      win.classList.add("keyboard-open");
-      // Scroll al final de los mensajes
+      // Pequeño delay para que el teclado aparezca primero
       setTimeout(() => {
+        if (window.visualViewport) {
+          const viewportHeight = window.visualViewport.height;
+          const availableHeight = viewportHeight - 20;
+          win.style.height = Math.min(availableHeight, 550) + "px";
+        }
+        // Scroll al último mensaje
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, 300);
     });
     
-    // Cuando el input pierde focus (teclado desaparece)
+    // Cuando pierde focus
     inputEl.addEventListener("blur", () => {
-      keyboardOpen = false;
       setTimeout(() => {
         if (!keyboardOpen) {
-          win.classList.remove("keyboard-open");
+          win.style.height = "";
+          win.style.bottom = "";
         }
       }, 100);
-    });
-    
-    // Detectar cambios de tamaño de viewport (teclado)
-    let lastHeight = window.innerHeight;
-    window.addEventListener("resize", () => {
-      const currentHeight = window.innerHeight;
-      // Si la altura disminuyó significativamente, el teclado está abierto
-      if (lastHeight - currentHeight > 150 && chatOpen) {
-        win.classList.add("keyboard-open");
-      }
-      // Si la altura aumentó, el teclado se cerró
-      else if (currentHeight - lastHeight > 150 && chatOpen) {
-        win.classList.remove("keyboard-open");
-      }
-      lastHeight = currentHeight;
     });
   }
 
@@ -279,8 +328,7 @@
     const text = inputEl.value.trim();
     if (!text) return;
     inputEl.value = "";
-    // Resetear altura del textarea
-    inputEl.style.height = 'auto';
+    resetTextareaHeight(); // Reset altura del textarea
     addMessage(text, "user");
     addTyping();
 
