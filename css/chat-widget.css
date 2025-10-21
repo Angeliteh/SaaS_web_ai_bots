@@ -81,19 +81,26 @@
   opacity: 0;
   transform: scale(0.7) translateY(60px);
   transition: opacity 0.35s cubic-bezier(.4,1.4,.6,1), transform 0.35s cubic-bezier(.4,1.4,.6,1);
+  /* Prevenir movimientos extraños en móvil */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @media (max-width: 600px) {
   .angel-chat-window {
     right: 10px;
-    left: auto;
+    left: 10px;
     bottom: 90px;
-    width: calc(100vw - 20px);
-    max-width: 420px;
+    width: auto;
+    max-width: none;
     /* Altura dinámica controlada por JS cuando aparece el teclado */
     height: 70vh;
     max-height: 85vh;
     border-radius: 16px;
+    /* Prevenir movimientos durante ajustes de teclado */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
   
   /* Cuando el teclado está abierto, el chat se ajusta automáticamente */
@@ -101,6 +108,9 @@
   .angel-chat-window.keyboard-open {
     /* height y max-height son controlados por JavaScript */
     bottom: 10px;
+    /* Mantener posición estable */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
   
   .angel-chat-label {
@@ -132,6 +142,19 @@
 .angel-chat-window.angel-chat-open {
   opacity: 1;
   transform: scale(1) translateY(0);
+}
+
+/* En móvil, mantener transform estable cuando está abierto */
+@media (max-width: 600px) {
+  .angel-chat-window.angel-chat-open {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  .angel-chat-window.angel-chat-open.keyboard-open {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
 }
 /* Etiqueta flotante para el chat */
 .angel-chat-label {
