@@ -70,37 +70,44 @@
   height: 550px;
   max-height: 90vh;
   z-index: 9999;
-  background: #111827; /* gris oscuro */
+  background: #111827;
   border-radius: 16px;
   display: none;
   flex-direction: column;
   box-shadow: 0 10px 28px rgba(0,0,0,0.55);
   overflow: hidden;
   font-family: system-ui, sans-serif;
-  /* Animación inicial (movido desde línea 127) */
   opacity: 0;
   transform: scale(0.7) translateY(60px);
   transition: opacity 0.35s cubic-bezier(.4,1.4,.6,1), transform 0.35s cubic-bezier(.4,1.4,.6,1);
+  /* Prevenir que el contenido se salga */
+  contain: layout style paint;
 }
 
 @media (max-width: 600px) {
   .angel-chat-window {
+    /* Posición fija respecto al viewport */
+    position: fixed;
+    top: auto;
     right: 10px;
-    left: auto;
+    left: 10px;
     bottom: 90px;
-    width: calc(100vw - 20px);
-    max-width: 420px;
-    /* Altura dinámica controlada por JS cuando aparece el teclado */
-    height: 70vh;
-    max-height: 85vh;
+    width: auto;
+    max-width: none;
+    /* Altura inicial en móvil */
+    height: calc(100vh - 180px);
+    max-height: calc(100vh - 180px);
     border-radius: 16px;
+    /* Prevenir scroll del body cuando el chat está abierto */
+    overscroll-behavior: contain;
   }
   
-  /* Cuando el teclado está abierto, el chat se ajusta automáticamente */
-  /* IMPORTANTE: Sin !important para permitir que JS controle height dinámicamente */
-  .angel-chat-window.keyboard-open {
-    /* height y max-height son controlados por JavaScript */
+  /* Clase agregada por JS cuando el teclado está visible */
+  .angel-chat-window.keyboard-visible {
+    /* JS controlará height dinámicamente */
     bottom: 10px;
+    /* Transición suave */
+    transition: height 0.2s ease, bottom 0.2s ease;
   }
   
   .angel-chat-label {
@@ -181,12 +188,16 @@
   padding: 10px;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #0f172a; /* fondo principal */
-  scroll-behavior: smooth; /* Scroll suave */
-  -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
-  /* Permitir scroll táctil sin cerrar el teclado */
-  touch-action: pan-y; /* Solo scroll vertical */
-  overscroll-behavior: contain; /* Prevenir scroll fuera del contenedor */
+  background: #0f172a;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* Permitir solo scroll vertical */
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  /* Prevenir que el scroll afecte el layout */
+  min-height: 0;
+  /* Asegurar que ocupe el espacio disponible */
+  height: 100%;
 }
 
 .angel-msg {
@@ -237,22 +248,19 @@
   padding: 10px 12px;
   background: #1f2937;
   color: #f3f4f6;
-  font-size: 14px;
   line-height: 1.4;
-  /* Altura mínima de 1 línea */
   min-height: 38px;
-  /* Altura máxima de ~5 líneas (controlada por JS) */
   max-height: 120px;
-  /* Transición suave al expandirse */
   transition: height 0.1s ease;
   overflow-y: auto;
-  /* Scroll personalizado */
   scrollbar-width: thin;
   scrollbar-color: #374151 #1f2937;
-  /* Prevenir zoom en iOS al hacer focus */
-  font-size: 16px; /* Mínimo 16px para prevenir zoom en iOS */
-  /* Mantener el teclado abierto */
+  /* CRÍTICO: 16px mínimo para prevenir zoom en iOS */
+  font-size: 16px;
+  /* Prevenir comportamientos extraños del teclado */
   touch-action: manipulation;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .angel-chat-input textarea::-webkit-scrollbar {

@@ -164,143 +164,73 @@
       }, 350);
     }
   });
-  // Ajustar alto del chat dinámicamente en móvil cuando aparece el teclado
+  // ========================================
+  // MANEJO DEL TECLADO EN MÓVIL - SIMPLIFICADO
+  // ========================================
   if (isMobile()) {
-    let keyboardOpen = false;
-    const initialHeight = window.innerHeight;
+    let keyboardVisible = false;
     
-    // Usar Visual Viewport API si está disponible (más preciso para teclados virtuales)
+    // Función para ajustar el chat cuando aparece el teclado
+    function adjustChatForKeyboard() {
+      if (!window.visualViewport) return;
+      
+      const viewport = window.visualViewport;
+      const windowHeight = window.innerHeight;
+      
+      // Calcular si el teclado está visible
+      const keyboardHeight = windowHeight - viewport.height;
+      const isKeyboardOpen = keyboardHeight > 150;
+      
+      if (isKeyboardOpen && chatOpen) {
+        keyboardVisible = true;
+        win.classList.add('keyboard-visible');
+        
+        // Calcular altura disponible (viewport - margen inferior)
+        const availableHeight = viewport.height - 20;
+        win.style.height = availableHeight + 'px';
+        
+        // Scroll al final después de ajustar
+        setTimeout(() => {
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }, 100);
+      } else if (keyboardVisible && !isKeyboardOpen) {
+        // Teclado cerrado
+        keyboardVisible = false;
+        win.classList.remove('keyboard-visible');
+        win.style.height = '';
+      }
+    }
+    
+    // Escuchar cambios en el viewport (teclado)
     if (window.visualViewport) {
-      function handleViewportResize() {
-        const viewportHeight = window.visualViewport.height;
-        const windowHeight = window.innerHeight;
-        const heightDiff = windowHeight - viewportHeight;
-        
-        // Si hay una diferencia significativa, el teclado está abierto
-        if (heightDiff > 150) {
-          keyboardOpen = true;
-          // Calcular altura disponible (viewport - márgenes)
-          const availableHeight = viewportHeight - 20;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-          win.style.bottom = "10px";
-          
-          // Scroll al último mensaje
-          setTimeout(() => {
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          }, 150);
-        } else if (keyboardOpen && heightDiff < 50) {
-          // Teclado cerrado
-          keyboardOpen = false;
-          win.style.height = "";
-          win.style.bottom = "";
-        }
-      }
-      
-      window.visualViewport.addEventListener("resize", handleViewportResize);
-      window.visualViewport.addEventListener("scroll", handleViewportResize);
-    } else {
-      // Fallback para navegadores sin Visual Viewport API
-      function adjustChatHeight() {
-        const currentHeight = window.innerHeight;
-        const heightDiff = initialHeight - currentHeight;
-        
-        if (heightDiff > 150) {
-          keyboardOpen = true;
-          const availableHeight = currentHeight - 40;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-          win.style.bottom = "10px";
-          
-          setTimeout(() => {
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          }, 100);
-        } else if (keyboardOpen) {
-          keyboardOpen = false;
-          win.style.height = "";
-          win.style.bottom = "";
-        }
-      }
-      
-      window.addEventListener("resize", adjustChatHeight);
+      window.visualViewport.addEventListener('resize', adjustChatForKeyboard);
+      window.visualViewport.addEventListener('scroll', adjustChatForKeyboard);
     }
     
     // Cuando el input recibe focus
-    inputEl.addEventListener("focus", () => {
-      // Pequeño delay para que el teclado aparezca primero
+    inputEl.addEventListener('focus', () => {
+      // Esperar a que el teclado aparezca
       setTimeout(() => {
-        if (window.visualViewport) {
-          const viewportHeight = window.visualViewport.height;
-          const availableHeight = viewportHeight - 20;
-          win.style.height = Math.min(availableHeight, 550) + "px";
-        }
-        // Scroll al último mensaje
+        adjustChatForKeyboard();
+        // Scroll al final
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, 300);
     });
     
-    // Cuando pierde focus
-    inputEl.addEventListener("blur", () => {
+    // Cuando el input pierde focus
+    inputEl.addEventListener('blur', () => {
+      // Esperar un poco para ver si el teclado realmente se cierra
       setTimeout(() => {
-        if (!keyboardOpen) {
-          win.style.height = "";
-          win.style.bottom = "";
+        if (!document.activeElement || document.activeElement === document.body) {
+          adjustChatForKeyboard();
         }
-      }, 100);
+      }, 200);
     });
     
-    // ========================================
-    // SOLUCIÓN: Prevenir que el teclado se cierre al tocar el chat
-    // ========================================
-    
-    // Mantener el input enfocado cuando se toca el área de mensajes
-    messagesEl.addEventListener("touchstart", (e) => {
-      // Si el teclado está abierto, mantener el focus en el input
-      if (keyboardOpen || document.activeElement === inputEl) {
-        // No hacer nada, dejar que el scroll funcione
-        // Pero después de un momento, devolver el focus al input
-        setTimeout(() => {
-          if (chatOpen && !inputEl.contains(e.target)) {
-            inputEl.focus();
-          }
-        }, 10);
-      }
-    }, { passive: true });
-    
-    // Prevenir que el blur cierre el teclado cuando se toca el área de mensajes
-    let touchingMessages = false;
-    
-    messagesEl.addEventListener("touchstart", () => {
-      touchingMessages = true;
-    }, { passive: true });
-    
-    messagesEl.addEventListener("touchend", () => {
-      setTimeout(() => {
-        touchingMessages = false;
-      }, 100);
-    }, { passive: true });
-    
-    // Modificar el blur para no cerrar si estamos tocando mensajes
-    inputEl.addEventListener("blur", (e) => {
-      // Si estamos tocando el área de mensajes, devolver el focus
-      if (touchingMessages && chatOpen) {
-        setTimeout(() => {
-          inputEl.focus();
-        }, 50);
-      }
-    });
-    
-    // Prevenir que tocar fuera del input cierre el teclado
-    win.addEventListener("touchstart", (e) => {
-      // Si el teclado está abierto y tocamos dentro del chat (pero no el input)
-      if (keyboardOpen && !inputEl.contains(e.target) && win.contains(e.target)) {
-        // Prevenir el comportamiento por defecto que cierra el teclado
+    // Prevenir que el body haga scroll cuando el chat está abierto
+    win.addEventListener('touchmove', (e) => {
+      if (chatOpen) {
         e.stopPropagation();
-        
-        // Mantener el focus en el input después de un pequeño delay
-        setTimeout(() => {
-          if (chatOpen) {
-            inputEl.focus();
-          }
-        }, 10);
       }
     }, { passive: false });
   }
