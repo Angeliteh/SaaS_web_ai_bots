@@ -1104,6 +1104,17 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            /* Prevenir overflow horizontal */
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            * {
+                max-width: 100%;
+            }
+            
             .mobile-menu-button {
                 display: block !important;
             }
@@ -1122,8 +1133,7 @@
                 font-size: 2.5rem;
             }
             .hero {
-                padding-left: 4vw;
-                padding-right: 4vw;
+                padding: 150px 4% 100px;
             }
             .hero-container {
                 padding-left: 0;
@@ -1133,8 +1143,8 @@
             .stats-container,
             .pricing-container,
             .contact-container {
-                padding-left: 2vw;
-                padding-right: 2vw;
+                padding-left: 0;
+                padding-right: 0;
             }
             .hero-buttons {
                 flex-direction: column;
@@ -1414,7 +1424,7 @@
         /* Responsive para bots */
         @media (max-width: 768px) {
             .bots {
-                padding: 80px 1rem;
+                padding: 80px 4%;
             }
 
             .intro-content {
@@ -2039,7 +2049,7 @@
         /* Responsive para cases, trust y modals */
         @media (max-width: 768px) {
             .cases, .trust {
-                padding: 80px 1rem;
+                padding: 80px 4%;
             }
 
             .cases-grid, .trust-grid {
@@ -2474,7 +2484,7 @@
         /* Responsive para FAQ y modals */
         @media (max-width: 768px) {
             .faq {
-                padding: 80px 1rem;
+                padding: 80px 4%;
             }
 
             .faq-list {
