@@ -1,11 +1,15 @@
-
 @charset "utf-8";
 /* CSS Document */
 
- * {
+*, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
         }
 
         :root {
@@ -34,7 +38,8 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-            max-width: 100vw;
+            width: 100%;
+            max-width: 100%;
             position: relative;
             overscroll-behavior-x: none;
             overscroll-behavior-y: none;
@@ -72,12 +77,14 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem 2rem;
+            max-width: 100%;
+            padding: 1rem 5%;
             background: rgba(15, 15, 35, 0.98);
             /* backdrop-filter: blur(10px); */
             border-bottom: 1px solid var(--border-color);
             z-index: 10000;
             transition: background 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
         }
 
         .nav-container {
@@ -407,12 +414,15 @@
 
         /* Hero Section */
         .hero {
-            padding: 150px 2rem 100px;
+            padding: 150px 5% 100px;
             text-align: center;
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .hero-container {
@@ -553,7 +563,10 @@
 
         /* Features Section */
         .features {
-            padding: 120px 2rem;
+            padding: 120px 5%;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .features-container {
@@ -662,10 +675,13 @@
 
         /* Stats Section */
         .stats {
-            padding: 80px 2rem;
+            padding: 80px 5%;
             background: rgba(0, 255, 255, 0.02);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .stats-container {
@@ -699,7 +715,10 @@
 
         /* Pricing Section */
         .pricing {
-            padding: 120px 2rem;
+            padding: 120px 5%;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .pricing-container {
@@ -806,9 +825,12 @@
 
         /* Contact Section */
         .contact {
-            padding: 120px 2rem;
+            padding: 120px 5%;
             background: rgba(0, 255, 255, 0.02);
             border-top: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .contact-container {
@@ -1237,10 +1259,13 @@
 
         /* Bots Section Styles */
         .bots {
-            padding: 120px 2rem;
+            padding: 120px 5%;
             background: rgba(0, 255, 255, 0.02);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .bots-container {
@@ -1473,7 +1498,10 @@
            CASES SECTION (Success Cases)
            ======================================== */
         .cases {
-            padding: 120px 2rem;
+            padding: 120px 5%;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .cases-container {
@@ -1586,10 +1614,13 @@
            TRUST SECTION
            ======================================== */
         .trust {
-            padding: 120px 2rem;
+            padding: 120px 5%;
             background: rgba(0, 255, 255, 0.02);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .trust-container {
@@ -2070,10 +2101,13 @@
            FAQ SECTION
            ======================================== */
         .faq {
-            padding: 120px 2rem;
+            padding: 120px 5%;
             background: rgba(0, 255, 255, 0.02);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .faq-container {
