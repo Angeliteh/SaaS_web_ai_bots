@@ -95,7 +95,7 @@
     width: auto;
     max-width: none;
     /* Altura inicial en móvil */
-    height: calc(100vh - 180px);
+  
     max-height: calc(100vh - 180px);
     border-radius: 16px;
     /* Prevenir scroll del body cuando el chat está abierto */
